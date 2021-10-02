@@ -1,0 +1,8 @@
+.UserForm-Title {
+  text-transform: capitalize;
+}
+
+.UserFrom-Button {
+  margin-top: 1.5rem;
+  width: 100%;
+}
