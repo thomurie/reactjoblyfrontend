@@ -1,7 +1,7 @@
 // 3rd party imports
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Jumbotron, Container, Button } from "reactstrap";
+import { Jumbotron, Button } from "reactstrap";
 
 // Local imports
 import UserContext from "../../Contexts/UserContext";
@@ -32,34 +32,53 @@ const Home = () => {
     history.push(`/${path}`);
   };
 
+  const INTIALSTATE = [
+    <>
+      <h1 className="display-4">Loading...</h1>
+    </>,
+  ];
+
   const { username, firstName } = useContext(UserContext);
+  const [data, setData] = useState(INTIALSTATE);
+  const [loaded, setLoaded] = useState(false);
+
+  const userIsTrue = [
+    <>
+      <h2>Welcome {firstName}</h2>
+    </>,
+  ];
+
+  const userIsFalse = [
+    <>
+      <Button color="primary" size="lg" onClick={() => routeToPath("login")}>
+        Login
+      </Button>{" "}
+      <Button color="primary" size="lg" onClick={() => routeToPath("signup")}>
+        Sign Up
+      </Button>
+    </>,
+  ];
+
+  setTimeout(() => {
+    setLoaded(true);
+  }, 500);
+
+  useEffect(async () => {
+    if (!loaded) {
+      return;
+    }
+    if (username) {
+      setData(userIsTrue);
+    } else {
+      setData(userIsFalse);
+    }
+  }, [loaded]);
 
   return (
     <div>
-      <Jumbotron fluid>
-        <Container fluid>
-          <h1 className="display-3">Jobly</h1>
-          {username ? (
-            <h2>Welcome {firstName}</h2>
-          ) : (
-            <>
-              <Button
-                color="primary"
-                size="lg"
-                onClick={() => routeToPath("login")}
-              >
-                Login
-              </Button>{" "}
-              <Button
-                color="primary"
-                size="lg"
-                onClick={() => routeToPath("signup")}
-              >
-                Sign Up
-              </Button>{" "}
-            </>
-          )}
-        </Container>
+      <Jumbotron>
+        <h1 className="display-3">Jobly</h1>
+        {data}
       </Jumbotron>
     </div>
   );

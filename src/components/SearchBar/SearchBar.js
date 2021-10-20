@@ -21,7 +21,7 @@ import { Button, InputGroup, InputGroupAddon, Input } from "reactstrap";
  * @return {ReactComponent}   Returns the SearchBar Component which renders a InputGroup for searching
  */
 
-const SearchBar = ({ handleChange, handleSubmit, search }) => {
+const SearchBar = ({ handleChange, handleSubmit, search, clearSearch }) => {
   return (
     <InputGroup>
       <Input
@@ -30,9 +30,27 @@ const SearchBar = ({ handleChange, handleSubmit, search }) => {
         placeholder="Enter Search Term"
         value={search}
         onChange={handleChange}
-      />
+      />{" "}
       <InputGroupAddon addonType="append">
-        <Button onClick={handleSubmit}>Clear Search</Button>
+        {search.length > 0 ? (
+          <>
+            <Button color="primary" onClick={handleSubmit}>
+              Search
+            </Button>{" "}
+            <Button color="warning" onClick={clearSearch}>
+              Clear Search
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button color="secondary" onClick={handleSubmit} disabled>
+              Search
+            </Button>{" "}
+            <Button color="secondary" onClick={clearSearch} disabled>
+              Clear Search
+            </Button>
+          </>
+        )}
       </InputGroupAddon>
     </InputGroup>
   );

@@ -1,6 +1,6 @@
 // 3rd party imports
-import { Link } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import {
   Collapse,
   Navbar,
@@ -41,6 +41,8 @@ import "./NavBar.css";
  */
 
 const NavBar = ({ signOut }) => {
+  const history = useHistory();
+
   const [isOpen, setIsOpen] = useState(false);
   const [routes, setRoutes] = useState(["Login", "Signup"]);
   const { firstName } = useContext(UserContext);
@@ -52,6 +54,11 @@ const NavBar = ({ signOut }) => {
   }, [firstName]);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  const handleSignOut = () => {
+    signOut();
+    history.push(`/login`);
+  };
 
   return (
     <div>
@@ -73,7 +80,7 @@ const NavBar = ({ signOut }) => {
               </NavItem>
             ))}
             {firstName ? (
-              <Button color="primary" size="sm" onClick={signOut}>
+              <Button color="primary" size="sm" onClick={handleSignOut}>
                 {`Log Out ${firstName}`}
               </Button>
             ) : (

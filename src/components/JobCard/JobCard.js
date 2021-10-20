@@ -1,12 +1,12 @@
 // 3rd party imports
 import { useContext, useState } from "react";
 import {
-  ListGroupItem,
-  ListGroupItemHeading,
-  ListGroupItemText,
-  List,
-  ListInlineItem,
+  Card,
   Button,
+  CardTitle,
+  CardText,
+  CardSubtitle,
+  CardBody,
 } from "reactstrap";
 // Local imports
 import JoblyApi from "../../helpers/api";
@@ -47,30 +47,58 @@ const JobCard = ({ job }) => {
   };
 
   return (
-    <ListGroupItem>
-      <ListGroupItemHeading>{job.title}</ListGroupItemHeading>
-      <ListGroupItemText>
-        <List type="inline">
-          <ListInlineItem>{job.companyName}</ListInlineItem>
-          <ListInlineItem>${job.salary}</ListInlineItem>
-          <ListInlineItem>
-            {job.equity && job.equity !== "0" ? (
-              <p>Equity: {job.equity}</p>
-            ) : null}
-          </ListInlineItem>
-        </List>
-      </ListGroupItemText>
-      {applied.indexOf(job.id) === -1 ? (
-        <Button onClick={handleClick} color="info">
-          Apply
-        </Button>
-      ) : (
-        <Button color="info" disabled>
-          Applied
-        </Button>
-      )}
-    </ListGroupItem>
+    <Card>
+      <CardBody>
+        <CardTitle tag="h5">{job.title}</CardTitle>
+        <CardSubtitle tag="h6" className="mb-2 text-muted">
+          {job.companyName}
+        </CardSubtitle>
+        {job.salary !== null ? (
+          <CardText>${job.salary}</CardText>
+        ) : (
+          <CardText>Salary: Negotiable</CardText>
+        )}
+        {job.equity && job.equity !== "0" ? (
+          <CardText>Equity: {job.equity}</CardText>
+        ) : (
+          <CardText>Equity: Negotiable</CardText>
+        )}
+        {applied.indexOf(job.id) === -1 ? (
+          <Button onClick={handleClick} color="info">
+            Apply
+          </Button>
+        ) : (
+          <Button color="info" disabled>
+            Applied
+          </Button>
+        )}
+      </CardBody>
+    </Card>
   );
 };
 
 export default JobCard;
+
+{
+  /* <ListGroupItem>
+  <ListGroupItemHeading>{job.title}</ListGroupItemHeading>
+  <ListGroupItemText>
+    <List type="inline">
+      <ListInlineItem>{job.companyName}</ListInlineItem>
+      <ListInlineItem>${job.salary}</ListInlineItem>
+      <ListInlineItem>
+        {job.equity && job.equity !== "0" ? <p>Equity: {job.equity}</p> : null}
+      </ListInlineItem>
+    </List>
+  </ListGroupItemText>
+  {applied.indexOf(job.id) === -1 ? (
+    <Button onClick={handleClick} color="info">
+      Apply
+    </Button>
+  ) : (
+    <Button color="info" disabled>
+      Applied
+    </Button>
+  )}
+</ListGroupItem>; */
+}

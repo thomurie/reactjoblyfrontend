@@ -1,10 +1,6 @@
 // 3rd party imports
 import { useHistory } from "react-router-dom";
-import {
-  ListGroupItem,
-  ListGroupItemHeading,
-  ListGroupItemText,
-} from "reactstrap";
+import { Card, Button, CardTitle, CardText, CardBody } from "reactstrap";
 
 /**
  * Summary.     Defines the CompanyCard Component
@@ -30,11 +26,18 @@ const CompanyCard = ({ company }) => {
   };
 
   return (
-    <ListGroupItem tag="button" onClick={viewCompany}>
-      <ListGroupItemHeading>{company.name}</ListGroupItemHeading>
-      <ListGroupItemText>{company.description}</ListGroupItemText>
-    </ListGroupItem>
+    <Card tag="button" onClick={viewCompany}>
+      <CardBody>
+        <CardTitle tag="h5">{company.name}</CardTitle>
+        <CardText>{company.description}</CardText>
+      </CardBody>
+    </Card>
   );
 };
 
 export default CompanyCard;
+
+//   <ListGroupItem tag="button" onClick={viewCompany}>
+//   <ListGroupItemHeading>{company.name}</ListGroupItemHeading>
+//   <ListGroupItemText>{company.description}</ListGroupItemText>
+// </ListGroupItem>

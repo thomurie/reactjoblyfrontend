@@ -1,7 +1,7 @@
 // 3rd Pary Imports
 import { useEffect, useState, useContext } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { ListGroup, Container, Row, Col } from "reactstrap";
+import { ListGroup, Container, Row, Col, CardGroup } from "reactstrap";
 // Local Imports
 import CompanyCard from "../CompanyCard/CompanyCard";
 import Details from "../Details/Details";
@@ -44,39 +44,60 @@ const DataList = ({ type }) => {
     history.push("/");
   }
 
-  const { handle, jobs } = useParams();
+  const { handle } = useParams();
 
-  let [search, setSearch] = useState("");
-  let [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
+  const [formData, setFormData] = useState("");
+  const [data, setData] = useState([]);
+  const [dataType, setDataType] = useState({ type: type });
 
   /**
    * Set the data based on the type of data being rendered.
    */
   useEffect(() => {
+    if (type !== dataType.type) {
+      console.log(type, dataType.type);
+      clearSearch();
+    }
     if (type === "AllCompanies") {
+      setDataType({
+        type: type,
+        name: "Companies",
+        description: "All the Wonderful Companies on Jobly",
+      });
       /**
        * renders a CompanyCard for each company in the retrieved data
        */
       JoblyApi.allCompanies(search)
         .then((AllCompanyData) => {
-          setData([
-            <>
-              <Details
-                name="Companies"
-                description="All the Wonderful Companies on Jobly"
-              ></Details>
-              <SearchBar
-                search={search}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              ></SearchBar>
-              <ListGroup>
-                {AllCompanyData.map((d) => (
-                  <CompanyCard company={d}></CompanyCard>
-                ))}
-              </ListGroup>
-            </>,
-          ]);
+          if (type !== dataType.type) {
+            clearSearch();
+          } else if (AllCompanyData.length < 1) {
+            alert("No items found");
+            clearSearch();
+          }
+
+          let items = [];
+          let count = 0;
+          const cards = [];
+
+          for (let i = 0; i < AllCompanyData.length; i++) {
+            const e = AllCompanyData[i];
+            if (count <= 2) {
+              items.push(<CompanyCard company={e}></CompanyCard>);
+              i + 1 === AllCompanyData.length
+                ? cards.push(<CardGroup>{items}</CardGroup>)
+                : count++;
+            } else {
+              cards.push(<CardGroup>{items}</CardGroup>);
+              items = [];
+              count = 0;
+            }
+          }
+
+          // cards.push(<CardGroup>{items}</CardGroup>
+
+          setData(cards);
         })
         .catch((err) => {
           console.error(err);
@@ -89,48 +110,74 @@ const DataList = ({ type }) => {
        */
       JoblyApi.getCompany(handle)
         .then((CompanyData) => {
-          setData([
-            <>
-              <Details
-                name={CompanyData.name}
-                description={CompanyData.description}
-              ></Details>
-              <ListGroup>
-                {CompanyData.jobs.map((j) => (
-                  <JobCard job={j}></JobCard>
-                ))}
-              </ListGroup>
-            </>,
-          ]);
+          setDataType({
+            type: type,
+            name: CompanyData.name,
+            description: CompanyData.description,
+          });
+
+          let items = [];
+          let count = 0;
+          const cards = [];
+
+          for (let i = 0; i < CompanyData.jobs.length; i++) {
+            const e = CompanyData.jobs[i];
+
+            if (count < 3) {
+              items.push(<JobCard job={e}></JobCard>);
+              i + 1 === CompanyData.jobs.length
+                ? cards.push(<CardGroup>{items}</CardGroup>)
+                : count++;
+            } else {
+              cards.push(<CardGroup>{items}</CardGroup>);
+              items = [];
+              count = 0;
+            }
+          }
+
+          setData(cards);
         })
         .catch((err) => {
           console.error(err);
           setData([]);
         });
     } else if (type === "AllJobs") {
+      setDataType({
+        type: type,
+        name: "Jobs",
+        description: "Find Your Next Job on Jobly",
+      });
       /**
        * renders a JobCard for each company in the retrieved data
        */
       JoblyApi.allJobs(search)
         .then((AllJobData) => {
-          setData([
-            <>
-              <Details
-                name="Jobs"
-                description="Find Your Next Job on Jobly"
-              ></Details>
-              <SearchBar
-                search={search}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-              ></SearchBar>
-              <ListGroup>
-                {AllJobData.map((j) => (
-                  <JobCard job={j}></JobCard>
-                ))}
-              </ListGroup>
-            </>,
-          ]);
+          if (type !== dataType.type) {
+            clearSearch();
+          } else if (AllJobData.length < 1) {
+            alert("No items found");
+            clearSearch();
+          }
+
+          let items = [];
+          let count = 0;
+          const cards = [];
+
+          for (let i = 0; i < AllJobData.length; i++) {
+            const e = AllJobData[i];
+            if (count < 3) {
+              items.push(<JobCard job={e}></JobCard>);
+              i + 1 === AllJobData.length
+                ? cards.push(<CardGroup>{items}</CardGroup>)
+                : count++;
+            } else {
+              cards.push(<CardGroup>{items}</CardGroup>);
+              items = [];
+              count = 0;
+            }
+          }
+
+          setData(cards);
         })
         .catch((err) => {
           console.error(err);
@@ -140,24 +187,61 @@ const DataList = ({ type }) => {
   }, [type, search]);
 
   const handleChange = (e) => {
+    e.preventDefault();
     const { value } = e.target;
-    setSearch(value);
+    setFormData(value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSearch(formData);
+  };
+
+  const clearSearch = () => {
+    setFormData("");
     setSearch("");
   };
 
   return (
-    <Container className="themed-container" fluid="sm">
-      <Row>
-        <Col sm="12" md={{ size: 6, offset: 3 }}>
-          {data ? data : <h3>Loading...</h3>}
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Container className="themed-container" fluid="sm">
+        <Row>
+          <Col sm="12" md={{ size: 6, offset: 3 }}>
+            <Details
+              name={dataType.name}
+              description={dataType.description}
+            ></Details>
+            {type !== "Company" ? (
+              <SearchBar
+                search={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                clearSearch={clearSearch}
+              ></SearchBar>
+            ) : (
+              <></>
+            )}
+          </Col>
+        </Row>
+        {data}
+      </Container>
+    </>
   );
 };
 
 export default DataList;
+// setData([
+//   <>
+//     {CompanyData.jobs.map((j) => (
+//       <JobCard job={j}></JobCard>
+//     ))}
+//   </>,
+// ]);
+
+// setData([
+//   <>
+//     {AllJobData.map((j) => (
+//       <JobCard job={j}></JobCard>
+//     ))}
+//   </>,
+// ]);

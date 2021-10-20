@@ -1,5 +1,6 @@
 // 3rd Pary Imports
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Button,
   Form,
@@ -32,6 +33,12 @@ import "./UserForm.css";
  * @return {ReactComponent}             Returns the UserForm Component with different data depending on value of type.
  */
 const UserForm = ({ action, type }) => {
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(`/`);
+  };
+
   const [formData, setFormData] = useState({});
   useEffect(() => {
     setFormData(
@@ -55,6 +62,7 @@ const UserForm = ({ action, type }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     action(formData);
+    handleClick();
     setFormData({});
   };
   return (
@@ -84,7 +92,7 @@ const UserForm = ({ action, type }) => {
                 Submit
               </Button>
             ) : (
-              <Button color="primary" className="UserFrom-Button" disabled>
+              <Button color="secondary" className="UserFrom-Button" disabled>
                 Submit
               </Button>
             )}

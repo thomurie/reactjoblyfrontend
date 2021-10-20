@@ -1,5 +1,7 @@
 // 3rd Party Imports
 import { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
+import { Container } from "reactstrap";
 // Local imports
 import JoblyApi from "../../helpers/api";
 import Routes from "../Routes/Routes";
@@ -34,6 +36,12 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const [localUser, updateLocalUser] = useLocalStorage();
+
+  // const history = useHistory();
+
+  // const routeToPath = (path) => {
+  //   history.push(`/${path}`);
+  // };
 
   /**
    * Summary.     Removes the user from the localStorage.
@@ -107,7 +115,7 @@ function App() {
         updateLocalUser("add", { token: resToken, username: user.username });
       })
       .catch((err) => {
-        console.error(err);
+        alert(err[0]);
         signOut();
       });
   };
@@ -137,7 +145,9 @@ function App() {
         updateLocalUser("add", { token: resToken, username: user.username });
       })
       .catch((err) => {
-        console.error(err);
+        err.forEach((msg) => {
+          alert(msg);
+        });
         signOut();
       });
   };
@@ -202,16 +212,18 @@ function App() {
   }, [localUser]);
 
   return (
-    <div className="App">
-      <UserContext.Provider value={currentUser}>
-        <Routes
-          login={login}
-          signOut={signOut}
-          signUp={signUp}
-          updateUser={updateUser}
-        ></Routes>
-      </UserContext.Provider>
-    </div>
+    <Container>
+      <div className="App">
+        <UserContext.Provider value={currentUser}>
+          <Routes
+            login={login}
+            signOut={signOut}
+            signUp={signUp}
+            updateUser={updateUser}
+          ></Routes>
+        </UserContext.Provider>
+      </div>
+    </Container>
   );
 }
 
