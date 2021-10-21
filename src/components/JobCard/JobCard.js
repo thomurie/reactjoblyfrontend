@@ -1,13 +1,14 @@
 // 3rd party imports
-import { useContext, useState } from "react";
 import {
-  ListGroupItem,
-  ListGroupItemHeading,
-  ListGroupItemText,
-  List,
-  ListInlineItem,
-  Button,
-} from "reactstrap";
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardSubTitle,
+  MDBCol,
+  MDBBtn,
+} from "mdb-react-ui-kit";
+import { useContext, useState } from "react";
 // Local imports
 import JoblyApi from "../../helpers/api";
 import UserContext from "../../Contexts/UserContext";
@@ -47,29 +48,36 @@ const JobCard = ({ job }) => {
   };
 
   return (
-    <ListGroupItem>
-      <ListGroupItemHeading>{job.title}</ListGroupItemHeading>
-      <ListGroupItemText>
-        <List type="inline">
-          <ListInlineItem>{job.companyName}</ListInlineItem>
-          <ListInlineItem>${job.salary}</ListInlineItem>
-          <ListInlineItem>
+    <MDBCol>
+      <MDBCard
+        style={{ backgroundColor: "#454955" }}
+        className="text-white h-100"
+      >
+        <MDBCardBody>
+          <MDBCardTitle>{job.title}</MDBCardTitle>
+          <MDBCardSubTitle>{job.companyName}</MDBCardSubTitle>
+          <MDBCardText>
+            {job.salary > 4 ? `$${job.salary}` : "Negotiable"}
+          </MDBCardText>
+          <MDBCardText>
             {job.equity && job.equity !== "0" ? (
               <p>Equity: {job.equity}</p>
-            ) : null}
-          </ListInlineItem>
-        </List>
-      </ListGroupItemText>
-      {applied.indexOf(job.id) === -1 ? (
-        <Button onClick={handleClick} color="info">
-          Apply
-        </Button>
-      ) : (
-        <Button color="info" disabled>
-          Applied
-        </Button>
-      )}
-    </ListGroupItem>
+            ) : (
+              "401K | Health | Dental"
+            )}
+          </MDBCardText>
+          {applied.indexOf(job.id) === -1 ? (
+            <MDBBtn onClick={handleClick} color="info">
+              Apply
+            </MDBBtn>
+          ) : (
+            <MDBBtn color="info" disabled>
+              Applied
+            </MDBBtn>
+          )}
+        </MDBCardBody>
+      </MDBCard>
+    </MDBCol>
   );
 };
 

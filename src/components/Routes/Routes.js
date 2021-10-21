@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 // Local Imports
 import DataList from "../DataList/DataList";
 import EditProfile from "../UserForm/EditProfile";
+import Footer from "../Footer/Footer";
 import Home from "../Home/Home";
 import NavBar from "../NavBar/NavBar";
 import UserForm from "../UserForm/UserForm";
@@ -71,6 +72,7 @@ const Routes = ({ login, signOut, signUp, updateUser }) => {
           {/* Handle All Other Requests */}
           <Redirect to="/" />
         </Switch>
+        <Footer></Footer>
       </BrowserRouter>
     </div>
   );

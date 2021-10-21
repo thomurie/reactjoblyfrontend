@@ -1,17 +1,9 @@
 // 3rd Pary Imports
+import { MDBInput, MDBBtn, MDBContainer } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
 // Local Imports
 import Details from "../Details/Details";
+import Image from "../Images/sean-pollock-PhYq704ffdA-unsplash.jpg";
 // Style
 import "./UserForm.css";
 
@@ -57,41 +49,52 @@ const UserForm = ({ action, type }) => {
     action(formData);
     setFormData({});
   };
+
   return (
-    <Container className="themed-container" fluid="sm">
-      <Row>
-        <Col sm="12" md={{ size: 6, offset: 3 }}>
-          <Details name={type}></Details>
-          <Form onSubmit={handleSubmit}>
+    <div
+      id="UserForm-Login"
+      className="p-5 text-center bg-image"
+      style={{ backgroundImage: `url(${Image})` }}
+    >
+      <div className="mask" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
+        <div className="d-flex justify-content-center align-items-center h-100">
+          <div className="text-white">
+            <Details name={type}></Details>
             {Object.keys(formData).map((v) => (
-              <FormGroup>
-                <Label className={"UserForm-Title"} for={v}>
-                  {v === "firstName" || v === "lastName"
+              <MDBInput
+                className="mt-3 text-white UserForm-Title"
+                label={
+                  v === "firstName" || v === "lastName"
                     ? `${v.split("t")[0]}t ${v.split("t")[1]}`
-                    : v}
-                </Label>
-                <Input
-                  type={v !== "password" ? "text" : "password"}
-                  name={v}
-                  id={v}
-                  value={formData[v]}
-                  onChange={handleChange}
-                />
-              </FormGroup>
+                    : v
+                }
+                type={v !== "password" ? "text" : "password"}
+                name={v}
+                value={formData[v]}
+                onChange={handleChange}
+              />
             ))}
-            {formData.password ? (
-              <Button color="primary" className="UserFrom-Button">
-                Submit
-              </Button>
-            ) : (
-              <Button color="primary" className="UserFrom-Button" disabled>
-                Submit
-              </Button>
-            )}
-          </Form>
-        </Col>
-      </Row>
-    </Container>
+            <div className="d-grid gap-2 mt-3 mb-3">
+              {formData.password ? (
+                <MDBBtn onClick={handleSubmit}>Submit</MDBBtn>
+              ) : (
+                <MDBBtn disabled>Submit</MDBBtn>
+              )}
+            </div>
+            <h6 classname="mt-3">
+              Photo by{" "}
+              <a href="https://unsplash.com/@seanpollock?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+                Sean Pollock
+              </a>{" "}
+              on{" "}
+              <a href="https://unsplash.com/s/photos/office?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+                Unsplash
+              </a>
+            </h6>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

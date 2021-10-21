@@ -1,16 +1,18 @@
 // 3rd party imports
-import { Link } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
 import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  Button,
-} from "reactstrap";
+  MDBContainer,
+  MDBNavbar,
+  MDBNavbarBrand,
+  MDBNavbarToggler,
+  MDBNavbarNav,
+  MDBNavbarItem,
+  MDBNavbarLink,
+  MDBIcon,
+  MDBCollapse,
+  MDBBtn,
+} from "mdb-react-ui-kit";
+import { useContext, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 // Local imports
 import UserContext from "../../Contexts/UserContext";
@@ -41,7 +43,7 @@ import "./NavBar.css";
  */
 
 const NavBar = ({ signOut }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [showNavSecond, setShowNavSecond] = useState(false);
   const [routes, setRoutes] = useState(["Login", "Signup"]);
   const { firstName } = useContext(UserContext);
 
@@ -51,38 +53,60 @@ const NavBar = ({ signOut }) => {
     );
   }, [firstName]);
 
-  const toggle = () => setIsOpen(!isOpen);
-
   return (
-    <div>
-      <Navbar color="light" light expand="md">
-        <NavbarBrand href="/">Jobly</NavbarBrand>
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
-            {routes.map((route) => (
-              <NavItem>
-                <NavLink>
-                  <Link
-                    to={`/${route.toLowerCase()}`}
-                    className="NavBar-NavLink"
-                  >
-                    {route}
+    <header>
+      <MDBNavbar expand="lg" light bgColor="light">
+        <MDBContainer fluid>
+          <MDBNavbarBrand>
+            <Link style={{ color: "#72B01D" }} to="/">
+              Jobly
+            </Link>
+          </MDBNavbarBrand>
+          <MDBNavbarToggler
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            onClick={() => setShowNavSecond(!showNavSecond)}
+          >
+            <MDBIcon icon="bars" fas />
+          </MDBNavbarToggler>
+          <MDBCollapse navbar show={showNavSecond}>
+            <MDBNavbarNav className="mb-2 mb-lg-0">
+              <MDBNavbarItem>
+                <MDBNavbarLink aria-current="page">
+                  <Link className="text-dark" to="/">
+                    Home
                   </Link>
-                </NavLink>
-              </NavItem>
-            ))}
-            {firstName ? (
-              <Button color="primary" size="sm" onClick={signOut}>
-                {`Log Out ${firstName}`}
-              </Button>
-            ) : (
-              <></>
-            )}
-          </Nav>
-        </Collapse>
-      </Navbar>
-    </div>
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+
+              {routes.map((route) => (
+                <MDBNavbarItem>
+                  <MDBNavbarLink>
+                    <Link
+                      to={`/${route.toLowerCase()}`}
+                      className=" text-dark NavBar-NavLink"
+                    >
+                      {route}
+                    </Link>
+                  </MDBNavbarLink>
+                </MDBNavbarItem>
+              ))}
+
+              {firstName ? (
+                <MDBNavbarItem>
+                  <MDBBtn
+                    color="dark"
+                    onClick={signOut}
+                  >{`Log Out ${firstName}`}</MDBBtn>
+                </MDBNavbarItem>
+              ) : (
+                <></>
+              )}
+            </MDBNavbarNav>
+          </MDBCollapse>
+        </MDBContainer>
+      </MDBNavbar>
+    </header>
   );
 };
 
