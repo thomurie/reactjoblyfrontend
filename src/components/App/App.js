@@ -79,6 +79,7 @@ function App() {
         setCurrentUser(userData);
       })
       .catch((err) => {
+        alert(err);
         console.error(err);
         signOut();
       });
@@ -107,6 +108,7 @@ function App() {
         updateLocalUser("add", { token: resToken, username: user.username });
       })
       .catch((err) => {
+        alert(err);
         console.error(err);
         signOut();
       });
@@ -137,6 +139,7 @@ function App() {
         updateLocalUser("add", { token: resToken, username: user.username });
       })
       .catch((err) => {
+        alert(err);
         console.error(err);
         signOut();
       });
