@@ -1,14 +1,14 @@
 // 3rd Pary Imports
-import { useEffect, useState, useContext } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { ListGroup, Container, Row, Col, CardGroup } from "reactstrap";
+import { MDBContainer, MDBRow, MDBBtn } from "mdb-react-ui-kit";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 // Local Imports
 import CompanyCard from "../CompanyCard/CompanyCard";
 import Details from "../Details/Details";
 import JobCard from "../JobCard/JobCard";
 import JoblyApi from "../../helpers/api";
 import SearchBar from "../SearchBar/SearchBar";
-import UserContext from "../../Contexts/UserContext";
 
 /**
  * Summary.         Creates a react component based on the type of data being requested.
@@ -34,70 +34,64 @@ import UserContext from "../../Contexts/UserContext";
  * @return {ReactComponent}        Renders a react component with the specified type of data.
  */
 const DataList = ({ type }) => {
-  let history = useHistory();
-  /**
-   * Verify that there is a signed in user
-   * else- redirect to home
-   */
-  const { username } = useContext(UserContext);
-  if (username === undefined) {
-    history.push("/");
-  }
-
   const { handle } = useParams();
 
-  const [search, setSearch] = useState("");
-  const [formData, setFormData] = useState("");
-  const [data, setData] = useState([]);
-  const [dataType, setDataType] = useState({ type: type });
+  let [formData, setFormData] = useState("");
+  let [search, setSearch] = useState("");
+  let [dataFields, setDataFields] = useState({
+    type: type,
+    name: "",
+    description: "",
+    searchBar: false,
+  });
+  let [data, setData] = useState({ cards: [], error: false });
 
+  const errorHandling = () => {
+    if (data.error && data.count === 1) {
+      return (
+        <MDBBtn rounded color="warning" onClick={clearSearch}>
+          No Results, Click to Refresh
+        </MDBBtn>
+      );
+    }
+    if (data.error) {
+      clearSearch();
+      const isError = { ...data, count: 1 };
+      setData(isError);
+    }
+    return data.cards;
+  };
   /**
    * Set the data based on the type of data being rendered.
    */
   useEffect(() => {
-    if (type !== dataType.type) {
-      console.log(type, dataType.type);
-      clearSearch();
-    }
+    console.log("Render");
     if (type === "AllCompanies") {
-      setDataType({
+      setDataFields({
         type: type,
         name: "Companies",
         description: "All the Wonderful Companies on Jobly",
+        searchBar: true,
       });
       /**
        * renders a CompanyCard for each company in the retrieved data
        */
       JoblyApi.allCompanies(search)
         .then((AllCompanyData) => {
-          if (type !== dataType.type) {
-            clearSearch();
-          } else if (AllCompanyData.length < 1) {
-            alert("No items found");
-            clearSearch();
+          if (AllCompanyData.length < 1) {
+            const isError = { ...data, error: true };
+            setData(isError);
           }
-
-          let items = [];
-          let count = 0;
-          const cards = [];
-
-          for (let i = 0; i < AllCompanyData.length; i++) {
-            const e = AllCompanyData[i];
-            if (count <= 2) {
-              items.push(<CompanyCard company={e}></CompanyCard>);
-              i + 1 === AllCompanyData.length
-                ? cards.push(<CardGroup>{items}</CardGroup>)
-                : count++;
-            } else {
-              cards.push(<CardGroup>{items}</CardGroup>);
-              items = [];
-              count = 0;
-            }
-          }
-
-          // cards.push(<CardGroup>{items}</CardGroup>
-
-          setData(cards);
+          setData({
+            error: false,
+            cards: [
+              <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+                {AllCompanyData.map((d) => (
+                  <CompanyCard company={d}></CompanyCard>
+                ))}
+              </MDBRow>,
+            ],
+          });
         })
         .catch((err) => {
           console.error(err);
@@ -109,75 +103,55 @@ const DataList = ({ type }) => {
        * Renders a JobCard for each job in the retrieved company data
        */
       JoblyApi.getCompany(handle)
+
         .then((CompanyData) => {
-          setDataType({
+          setDataFields({
             type: type,
             name: CompanyData.name,
             description: CompanyData.description,
+            searchBar: false,
           });
-
-          let items = [];
-          let count = 0;
-          const cards = [];
-
-          for (let i = 0; i < CompanyData.jobs.length; i++) {
-            const e = CompanyData.jobs[i];
-
-            if (count < 3) {
-              items.push(<JobCard job={e}></JobCard>);
-              i + 1 === CompanyData.jobs.length
-                ? cards.push(<CardGroup>{items}</CardGroup>)
-                : count++;
-            } else {
-              cards.push(<CardGroup>{items}</CardGroup>);
-              items = [];
-              count = 0;
-            }
-          }
-
-          setData(cards);
+          setData({
+            error: false,
+            cards: [
+              <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+                {CompanyData.jobs.map((j) => (
+                  <JobCard job={j}></JobCard>
+                ))}
+              </MDBRow>,
+            ],
+          });
         })
         .catch((err) => {
           console.error(err);
           setData([]);
         });
     } else if (type === "AllJobs") {
-      setDataType({
+      setDataFields({
         type: type,
         name: "Jobs",
         description: "Find Your Next Job on Jobly",
+        searchBar: true,
       });
       /**
        * renders a JobCard for each company in the retrieved data
        */
       JoblyApi.allJobs(search)
         .then((AllJobData) => {
-          if (type !== dataType.type) {
-            clearSearch();
-          } else if (AllJobData.length < 1) {
-            alert("No items found");
-            clearSearch();
+          if (AllJobData.length < 1) {
+            const isError = { ...data, error: true };
+            setData(isError);
           }
-
-          let items = [];
-          let count = 0;
-          const cards = [];
-
-          for (let i = 0; i < AllJobData.length; i++) {
-            const e = AllJobData[i];
-            if (count < 3) {
-              items.push(<JobCard job={e}></JobCard>);
-              i + 1 === AllJobData.length
-                ? cards.push(<CardGroup>{items}</CardGroup>)
-                : count++;
-            } else {
-              cards.push(<CardGroup>{items}</CardGroup>);
-              items = [];
-              count = 0;
-            }
-          }
-
-          setData(cards);
+          setData({
+            error: false,
+            cards: [
+              <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+                {AllJobData.map((j) => (
+                  <JobCard job={j}></JobCard>
+                ))}
+              </MDBRow>,
+            ],
+          });
         })
         .catch((err) => {
           console.error(err);
@@ -192,8 +166,7 @@ const DataList = ({ type }) => {
     setFormData(value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     setSearch(formData);
   };
 
@@ -203,29 +176,25 @@ const DataList = ({ type }) => {
   };
 
   return (
-    <>
-      <Container className="themed-container" fluid="sm">
-        <Row>
-          <Col sm="12" md={{ size: 6, offset: 3 }}>
-            <Details
-              name={dataType.name}
-              description={dataType.description}
-            ></Details>
-            {type !== "Company" ? (
-              <SearchBar
-                search={formData}
-                handleChange={handleChange}
-                handleSubmit={handleSubmit}
-                clearSearch={clearSearch}
-              ></SearchBar>
-            ) : (
-              <></>
-            )}
-          </Col>
-        </Row>
-        {data}
-      </Container>
-    </>
+    <div style={{ backgroundColor: "#F3EFF5" }}>
+      <MDBContainer>
+        <Details
+          name={dataFields.name}
+          description={dataFields.description}
+        ></Details>
+        {dataFields.searchBar ? (
+          <SearchBar
+            search={formData}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            handleClear={clearSearch}
+          ></SearchBar>
+        ) : (
+          <></>
+        )}
+        {errorHandling()}
+      </MDBContainer>
+    </div>
   );
 };
 

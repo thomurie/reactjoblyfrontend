@@ -1,5 +1,5 @@
 // 3rd party imports
-import { Button, InputGroup, InputGroupAddon, Input } from "reactstrap";
+import { MDBInputGroup, MDBInputGroupElement, MDBBtn } from "mdb-react-ui-kit";
 
 /**
  * Summary.     Renders a search bar that is used in the DataList Component
@@ -21,38 +21,27 @@ import { Button, InputGroup, InputGroupAddon, Input } from "reactstrap";
  * @return {ReactComponent}   Returns the SearchBar Component which renders a InputGroup for searching
  */
 
-const SearchBar = ({ handleChange, handleSubmit, search, clearSearch }) => {
+const SearchBar = ({ handleChange, handleClear, handleSubmit, search }) => {
   return (
-    <InputGroup>
-      <Input
-        type="text"
-        name="search"
+    <MDBInputGroup className="mb-3">
+      <MDBInputGroupElement
         placeholder="Enter Search Term"
-        value={search}
+        type="text"
         onChange={handleChange}
-      />{" "}
-      <InputGroupAddon addonType="append">
-        {search.length > 0 ? (
-          <>
-            <Button color="primary" onClick={handleSubmit}>
-              Search
-            </Button>{" "}
-            <Button color="warning" onClick={clearSearch}>
-              Clear Search
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button color="secondary" onClick={handleSubmit} disabled>
-              Search
-            </Button>{" "}
-            <Button color="secondary" onClick={clearSearch} disabled>
-              Clear Search
-            </Button>
-          </>
-        )}
-      </InputGroupAddon>
-    </InputGroup>
+        value={search}
+      />
+      {search ? (
+        <>
+          <MDBBtn onClick={handleSubmit}>Search</MDBBtn>
+          <MDBBtn onClick={handleClear}>Clear Search</MDBBtn>
+        </>
+      ) : (
+        <>
+          <MDBBtn disabled>Search</MDBBtn>
+          <MDBBtn disabled>Clear Search</MDBBtn>
+        </>
+      )}
+    </MDBInputGroup>
   );
 };
 

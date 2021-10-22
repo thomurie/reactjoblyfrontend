@@ -1,6 +1,3 @@
-// 3rd party imports
-import { Jumbotron, Container } from "reactstrap";
-
 /**
  * Summary.     Render a component with a given name and description.
  *
@@ -20,12 +17,8 @@ import { Jumbotron, Container } from "reactstrap";
 const Details = ({ description, name }) => {
   return (
     <div>
-      <Jumbotron fluid>
-        <Container fluid>
-          <h1 className="display-3">{name}</h1>
-          <p className="lead">{description}</p>
-        </Container>
-      </Jumbotron>
+      <h1 className="mb-3">{name}</h1>
+      <h5 className="mb-4">{description}</h5>
     </div>
   );
 };

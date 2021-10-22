@@ -1,8 +1,28 @@
-.UserForm-Title {
-  text-transform: capitalize;
+#UserForm-Login {
+  height: 65vh;
+  width: 100;
+  /* background: url("../Images/sean-pollock-PhYq704ffdA-unsplash.jpg"); */
+  background-size: auto 90vh;
 }
 
-.UserFrom-Button {
+/* Height for devices larger than 992px */
+@media (min-width: 992px) {
+  #UserForm-Login {
+    height: 600px;
+    width: 100;
+    background: url("../Images/sean-pollock-PhYq704ffdA-unsplash.jpg");
+    background-size: 100% auto;
+  }
+}
+.form-outline .form-control ~ .form-label {
+  color: white;
+  text-transform: capitalize;
+}
+.form-outline .form-control[readonly] {
+  background-color: transparent;
+}
+
+/* .UserFrom-Button {
   margin-top: 1.5rem;
   width: 100%;
-}
+} */

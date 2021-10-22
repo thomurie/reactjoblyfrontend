@@ -1,0 +1,17 @@
+/* Default height for small devices */
+#intro-example {
+  height: 400px;
+  width: 100;
+  background: url("../Images/christin-hume-Hcfwew744z4-unsplash.jpg");
+  background-size: auto 80vh;
+}
+
+/* Height for devices larger than 992px */
+@media (min-width: 992px) {
+  #intro-example {
+    height: 600px;
+    width: 100;
+    background: url("../Images/christin-hume-Hcfwew744z4-unsplash.jpg");
+    background-size: 100% auto;
+  }
+}

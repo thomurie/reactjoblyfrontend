@@ -1,9 +1,11 @@
 // 3rd party imports
-import { useContext, useEffect, useState } from "react";
+import { MDBBtn } from "mdb-react-ui-kit";
+import { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Jumbotron, Button } from "reactstrap";
+// import { Jumbotron, Container, Button } from "reactstrap";
 
 // Local imports
+import "./Home.css";
 import UserContext from "../../Contexts/UserContext";
 
 /**
@@ -75,12 +77,50 @@ const Home = () => {
   }, [loaded]);
 
   return (
-    <div>
-      <Jumbotron>
-        <h1 className="display-3">Jobly</h1>
-        {data}
-      </Jumbotron>
-    </div>
+    <header>
+      <div id="intro-example" className="p-5 text-center bg-image">
+        <div className="mask" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
+          <div className="d-flex justify-content-center align-items-center h-100">
+            <div className="text-white">
+              <h1 className="mb-3">Jobly</h1>
+              <h5 className="mb-4">
+                Find Your Next Great Opporutnity With Jobly
+              </h5>
+              {username ? (
+                <h4 className="mb-4">Welcome {firstName}</h4>
+              ) : (
+                <>
+                  <MDBBtn
+                    rounded
+                    className="mb-4"
+                    onClick={() => routeToPath("login")}
+                  >
+                    Login
+                  </MDBBtn>{" "}
+                  <MDBBtn
+                    rounded
+                    className="mb-4"
+                    onClick={() => routeToPath("signup")}
+                  >
+                    Sign Up
+                  </MDBBtn>
+                </>
+              )}
+              <h6 classname="mt-3">
+                Photo by{" "}
+                <a href="https://unsplash.com/@christinhumephoto?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+                  Christin Hume
+                </a>{" "}
+                on{" "}
+                <a href="https://unsplash.com/s/photos/office?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
+                  Unsplash
+                </a>
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 

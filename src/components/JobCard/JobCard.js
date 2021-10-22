@@ -1,13 +1,14 @@
 // 3rd party imports
-import { useContext, useState } from "react";
 import {
-  Card,
-  Button,
-  CardTitle,
-  CardText,
-  CardSubtitle,
-  CardBody,
-} from "reactstrap";
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardSubTitle,
+  MDBCol,
+  MDBBtn,
+} from "mdb-react-ui-kit";
+import { useContext, useState } from "react";
 // Local imports
 import JoblyApi from "../../helpers/api";
 import UserContext from "../../Contexts/UserContext";
@@ -47,33 +48,36 @@ const JobCard = ({ job }) => {
   };
 
   return (
-    <Card>
-      <CardBody>
-        <CardTitle tag="h5">{job.title}</CardTitle>
-        <CardSubtitle tag="h6" className="mb-2 text-muted">
-          {job.companyName}
-        </CardSubtitle>
-        {job.salary !== null ? (
-          <CardText>${job.salary}</CardText>
-        ) : (
-          <CardText>Salary: Negotiable</CardText>
-        )}
-        {job.equity && job.equity !== "0" ? (
-          <CardText>Equity: {job.equity}</CardText>
-        ) : (
-          <CardText>Equity: Negotiable</CardText>
-        )}
-        {applied.indexOf(job.id) === -1 ? (
-          <Button onClick={handleClick} color="info">
-            Apply
-          </Button>
-        ) : (
-          <Button color="info" disabled>
-            Applied
-          </Button>
-        )}
-      </CardBody>
-    </Card>
+    <MDBCol>
+      <MDBCard
+        style={{ backgroundColor: "#72B01D" }}
+        className="text-white h-100"
+      >
+        <MDBCardBody>
+          <MDBCardTitle>{job.title}</MDBCardTitle>
+          <MDBCardSubTitle>{job.companyName}</MDBCardSubTitle>
+          <MDBCardText>
+            {job.salary > 4 ? `$${job.salary}` : "Negotiable"}
+          </MDBCardText>
+          <MDBCardText>
+            {job.equity && job.equity !== "0" ? (
+              <p>Equity: {job.equity}</p>
+            ) : (
+              "401K | Health | Dental"
+            )}
+          </MDBCardText>
+          {applied.indexOf(job.id) === -1 ? (
+            <MDBBtn onClick={handleClick} color="info">
+              Apply
+            </MDBBtn>
+          ) : (
+            <MDBBtn color="info" disabled>
+              Applied
+            </MDBBtn>
+          )}
+        </MDBCardBody>
+      </MDBCard>
+    </MDBCol>
   );
 };
 

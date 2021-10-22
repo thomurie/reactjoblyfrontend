@@ -1,6 +1,12 @@
 // 3rd party imports
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCol,
+} from "mdb-react-ui-kit";
 import { useHistory } from "react-router-dom";
-import { Card, Button, CardTitle, CardText, CardBody } from "reactstrap";
 
 /**
  * Summary.     Defines the CompanyCard Component
@@ -26,12 +32,18 @@ const CompanyCard = ({ company }) => {
   };
 
   return (
-    <Card tag="button" onClick={viewCompany}>
-      <CardBody>
-        <CardTitle tag="h5">{company.name}</CardTitle>
-        <CardText>{company.description}</CardText>
-      </CardBody>
-    </Card>
+    <MDBCol>
+      <MDBCard
+        style={{ backgroundColor: "#72B01D" }}
+        className="text-white h-100"
+        onClick={viewCompany}
+      >
+        <MDBCardBody>
+          <MDBCardTitle>{company.name}</MDBCardTitle>
+          <MDBCardText>{company.description}</MDBCardText>
+        </MDBCardBody>
+      </MDBCard>
+    </MDBCol>
   );
 };
 
