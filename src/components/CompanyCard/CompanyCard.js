@@ -34,7 +34,7 @@ const CompanyCard = ({ company }) => {
   return (
     <MDBCol>
       <MDBCard
-        style={{ backgroundColor: "#454955" }}
+        style={{ backgroundColor: "#72B01D" }}
         className="text-white h-100"
         onClick={viewCompany}
       >
