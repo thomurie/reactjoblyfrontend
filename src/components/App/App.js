@@ -1,7 +1,5 @@
 // 3rd Party Imports
 import { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
-import { Container } from "reactstrap";
 // Local imports
 import JoblyApi from "../../helpers/api";
 import Routes from "../Routes/Routes";
@@ -213,20 +211,17 @@ function App() {
   }, [localUser]);
 
   return (
-    <Container>
-      <div className="App">
-        <UserContext.Provider value={currentUser}>
-          <Routes
-            login={login}
-            signOut={signOut}
-            signUp={signUp}
-            updateUser={updateUser}
-          ></Routes>
-        </UserContext.Provider>
-      </div>
-    </Container>
+    <div className="App">
+      <UserContext.Provider value={currentUser}>
+        <Routes
+          login={login}
+          signOut={signOut}
+          signUp={signUp}
+          updateUser={updateUser}
+        ></Routes>
+      </UserContext.Provider>
+    </div>
   );
 }
 
 export default App;
-

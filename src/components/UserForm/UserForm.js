@@ -24,12 +24,6 @@ import "./UserForm.css";
  * @return {ReactComponent}             Returns the UserForm Component with different data depending on value of type.
  */
 const UserForm = ({ action, type }) => {
-  const history = useHistory();
-
-  const handleClick = () => {
-    history.push(`/`);
-  };
-
   const [formData, setFormData] = useState({});
   useEffect(() => {
     setFormData(
@@ -53,7 +47,6 @@ const UserForm = ({ action, type }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     action(formData);
-    handleClick();
     setFormData({});
   };
 

@@ -1,6 +1,6 @@
 // 3rd party imports
 import { MDBBtn } from "mdb-react-ui-kit";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 // import { Jumbotron, Container, Button } from "reactstrap";
 
@@ -27,7 +27,7 @@ import UserContext from "../../Contexts/UserContext";
  * @return {ReactComponent}   Returns the Home Component with different data depending on value of UserContext
  */
 
-const Home = () => {
+const Home = ({ firstName }) => {
   const history = useHistory();
 
   const routeToPath = (path) => {
@@ -40,39 +40,36 @@ const Home = () => {
     </>,
   ];
 
-  const { username, firstName } = useContext(UserContext);
   const [data, setData] = useState(INTIALSTATE);
   const [loaded, setLoaded] = useState(false);
 
   const userIsTrue = [
     <>
-      <h2>Welcome {firstName}</h2>
+      <h4 className="mb-4">Welcome {firstName}</h4>
     </>,
   ];
 
   const userIsFalse = [
     <>
-      <Button color="primary" size="lg" onClick={() => routeToPath("login")}>
+      <MDBBtn rounded className="mb-4" onClick={() => routeToPath("login")}>
         Login
-      </Button>{" "}
-      <Button color="primary" size="lg" onClick={() => routeToPath("signup")}>
+      </MDBBtn>{" "}
+      <MDBBtn rounded className="mb-4" onClick={() => routeToPath("signup")}>
         Sign Up
-      </Button>
+      </MDBBtn>
     </>,
   ];
 
   setTimeout(() => {
     setLoaded(true);
-  }, 500);
+  }, 300);
 
   useEffect(async () => {
     if (!loaded) {
       return;
     }
-    if (username) {
-      setData(userIsTrue);
-    } else {
-      setData(userIsFalse);
+    {
+      firstName ? setData(userIsTrue) : setData(userIsFalse);
     }
   }, [loaded]);
 
@@ -86,26 +83,7 @@ const Home = () => {
               <h5 className="mb-4">
                 Find Your Next Great Opporutnity With Jobly
               </h5>
-              {username ? (
-                <h4 className="mb-4">Welcome {firstName}</h4>
-              ) : (
-                <>
-                  <MDBBtn
-                    rounded
-                    className="mb-4"
-                    onClick={() => routeToPath("login")}
-                  >
-                    Login
-                  </MDBBtn>{" "}
-                  <MDBBtn
-                    rounded
-                    className="mb-4"
-                    onClick={() => routeToPath("signup")}
-                  >
-                    Sign Up
-                  </MDBBtn>
-                </>
-              )}
+              {data}
               <h6 classname="mt-3">
                 Photo by{" "}
                 <a href="https://unsplash.com/@christinhumephoto?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">

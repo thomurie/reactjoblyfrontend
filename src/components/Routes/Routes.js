@@ -40,7 +40,7 @@ import UserContext from "../../Contexts/UserContext";
  */
 
 const Routes = ({ login, signOut, signUp, updateUser }) => {
-  const { username } = useContext(UserContext);
+  const { username, firstName, lastName, email } = useContext(UserContext);
   return (
     <div>
       <BrowserRouter>
@@ -48,7 +48,7 @@ const Routes = ({ login, signOut, signUp, updateUser }) => {
         <Switch>
           {/* Home */}
           <Route exact path="/">
-            <Home></Home>
+            {username ? <Home firstName={firstName}></Home> : <Home></Home>}
           </Route>
           {/* Companies */}
           <Route exact path="/companies">
@@ -92,7 +92,17 @@ const Routes = ({ login, signOut, signUp, updateUser }) => {
           </Route>
           {/* Profile */}
           <Route exact path="/profile">
-            <EditProfile action={updateUser}></EditProfile>
+            {username ? (
+              <EditProfile
+                action={updateUser}
+                firstName={firstName}
+                lastName={lastName}
+                email={email}
+                username={username}
+              ></EditProfile>
+            ) : (
+              <Redirect to="/" />
+            )}
           </Route>
           {/* Handle All Other Requests */}
           <Redirect to="/" />

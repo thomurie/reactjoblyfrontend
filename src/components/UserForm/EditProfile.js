@@ -25,23 +25,13 @@ import "./UserForm.css";
  *
  * @return {ReactComponent}         Returns the EditProfile Component with the data from UserContext.
  */
-const EditProfile = ({ action }) => {
-  let history = useHistory();
-
-  const { username, firstName, lastName, email } = useContext(UserContext);
-  if (username === undefined) {
-    history.push("/");
-  }
-
-  const [formData, setFormData] = useState({});
-  useEffect(() => {
-    setFormData({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: "",
-    });
-  }, [action]);
+const EditProfile = ({ action, username, firstName, lastName, email }) => {
+  const [formData, setFormData] = useState({
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    password: "",
+  });
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -83,6 +73,7 @@ const EditProfile = ({ action }) => {
                       label="Password"
                       type="password"
                       name="password"
+                      value={formData[v]}
                       onChange={handleChange}
                     />
                   </>
@@ -97,6 +88,7 @@ const EditProfile = ({ action }) => {
                       }
                       type="text"
                       name={v}
+                      value={formData[v]}
                       onChange={handleChange}
                     />
                   </>
