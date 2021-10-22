@@ -1,8 +1,8 @@
 #UserForm-Login {
-  height: 400px;
+  height: 65vh;
   width: 100;
   /* background: url("../Images/sean-pollock-PhYq704ffdA-unsplash.jpg"); */
-  background-size: auto 80vh;
+  background-size: auto 90vh;
 }
 
 /* Height for devices larger than 992px */

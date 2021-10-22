@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 // Local Imports
@@ -7,6 +8,9 @@ import Footer from "../Footer/Footer";
 import Home from "../Home/Home";
 import NavBar from "../NavBar/NavBar";
 import UserForm from "../UserForm/UserForm";
+
+// Local Imports
+import UserContext from "../../Contexts/UserContext";
 
 /**
  * Summary.     Uses react-router to render components based on the path.
@@ -36,6 +40,7 @@ import UserForm from "../UserForm/UserForm";
  */
 
 const Routes = ({ login, signOut, signUp, updateUser }) => {
+  const { username } = useContext(UserContext);
   return (
     <div>
       <BrowserRouter>
@@ -47,23 +52,43 @@ const Routes = ({ login, signOut, signUp, updateUser }) => {
           </Route>
           {/* Companies */}
           <Route exact path="/companies">
-            <DataList type="AllCompanies"></DataList>
+            {username ? (
+              <DataList type="AllCompanies"></DataList>
+            ) : (
+              <Redirect to="/" />
+            )}
           </Route>
           {/* Company Details */}
           <Route exact path="/companies/:handle">
-            <DataList type="Company"></DataList>
+            {username ? (
+              <DataList type="Company"></DataList>
+            ) : (
+              <Redirect to="/" />
+            )}
           </Route>
           {/* Jobs */}
           <Route exact path="/jobs">
-            <DataList type="AllJobs"></DataList>
+            {username ? (
+              <DataList type="AllJobs"></DataList>
+            ) : (
+              <Redirect to="/" />
+            )}
           </Route>
           {/* Login */}
           <Route exact path="/login">
-            <UserForm action={login} type={"Login"}></UserForm>
+            {username ? (
+              <Redirect to="/" />
+            ) : (
+              <UserForm action={login} type={"Login"}></UserForm>
+            )}
           </Route>
           {/* Signup */}
           <Route exact path="/signup">
-            <UserForm action={signUp} type={"Signup"}></UserForm>
+            {username ? (
+              <Redirect to="/" />
+            ) : (
+              <UserForm action={signUp} type={"Signup"}></UserForm>
+            )}
           </Route>
           {/* Profile */}
           <Route exact path="/profile">

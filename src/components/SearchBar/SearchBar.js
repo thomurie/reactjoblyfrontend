@@ -1,10 +1,5 @@
 // 3rd party imports
-import {
-  MDBInputGroup,
-  MDBInputGroupText,
-  MDBInputGroupElement,
-  MDBBtn,
-} from "mdb-react-ui-kit";
+import { MDBInputGroup, MDBInputGroupElement, MDBBtn } from "mdb-react-ui-kit";
 
 /**
  * Summary.     Renders a search bar that is used in the DataList Component

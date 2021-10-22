@@ -1,17 +1,7 @@
 // 3rd Pary Imports
-import { MDBInput, MDBBtn, MDBContainer } from "mdb-react-ui-kit";
+import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Container,
-  Row,
-  Col,
-} from "reactstrap";
 // Local Imports
 import Details from "../Details/Details";
 import Image from "../Images/annie-spratt-wgivdx9dBdQ-unsplash.jpg";
@@ -71,7 +61,7 @@ const EditProfile = ({ action }) => {
         style={{ backgroundImage: `url(${Image})` }}
       >
         <div className="mask" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
-          <div className="d-flex justify-content-center align-items-center h-100">
+          <div className="d-flex justify-content-center align-items-center h-200">
             <div className="text-white">
               <Details name="Edit Profile"></Details>
               <MDBInput
@@ -85,9 +75,9 @@ const EditProfile = ({ action }) => {
               {Object.keys(formData).map((v) =>
                 v === "password" ? (
                   <>
-                    <h5 classname="mt-3">
+                    <h6 classname="mt-3">
                       Please Enter Your Password to Confirm these Changes
-                    </h5>
+                    </h6>
                     <MDBInput
                       className="mt-3 text-white UserForm-Title"
                       label="Password"
@@ -112,7 +102,7 @@ const EditProfile = ({ action }) => {
                   </>
                 )
               )}
-              <div className="d-grid gap-2 mt-3 mb-3">
+              <div className="d-grid gap-2 mt-3 mb-4">
                 {formData.password ? (
                   <MDBBtn onClick={handleSubmit}>Save Changes</MDBBtn>
                 ) : (
@@ -138,117 +128,3 @@ const EditProfile = ({ action }) => {
 };
 
 export default EditProfile;
-
-// 3rd Pary Imports
-// import { useEffect, useState, useContext } from "react";
-// import { useHistory } from "react-router-dom";
-// import {
-//   Button,
-//   Form,
-//   FormGroup,
-//   Label,
-//   Input,
-//   Container,
-//   Row,
-//   Col,
-// } from "reactstrap";
-// // Local Imports
-// import Details from "../Details/Details";
-// import UserContext from "../../Contexts/UserContext";
-// // Style
-// import "./UserForm.css";
-
-// /**
-//  * Summary.     UI and functionality for updating a user's profile.
-//  *
-//  * Description. Component that provides the UI and functionality for updating a user
-//  * profile in the database.
-//  *
-//  * @requires          React
-//  * @requires          react-router-dom
-//  * @requires          reactstrap
-//  *
-//  * @param {Function}  action        Action to be performed on form submit.
-//  *
-//  * @typedef {Class}   ReactComponent
-//  *
-//  * @return {ReactComponent}         Returns the EditProfile Component with the data from UserContext.
-//  */
-// const EditProfile = ({ action }) => {
-//   let history = useHistory();
-
-//   const { username, firstName, lastName, email } = useContext(UserContext);
-//   if (username === undefined) {
-//     history.push("/");
-//   }
-
-//   const [formData, setFormData] = useState({});
-//   useEffect(() => {
-//     setFormData({
-//       firstName: firstName,
-//       lastName: lastName,
-//       email: email,
-//       password: "",
-//     });
-//   }, [action]);
-
-//   const formLabels = {
-//     firstName: "First Name",
-//     lastName: "Last Name",
-//     email: "Email",
-//     password: "Please Enter Your Password to Save Changes",
-//   };
-
-//   const handleChange = (e) => {
-//     e.preventDefault();
-//     const { value, name } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     action(formData);
-//     setFormData({});
-//   };
-//   return (
-//     <Container className="themed-container" fluid="sm">
-//       <Row>
-//         <Col sm="12" md={{ size: 6, offset: 3 }}>
-//           <Details name="Edit Profile"></Details>
-//           <Form onSubmit={handleSubmit}>
-//             <FormGroup>
-//               <Label className={"UserForm-Title"} for="username">
-//                 Username
-//               </Label>
-//               <Input type="text" value={username} />
-//             </FormGroup>
-//             {Object.keys(formData).map((v) => (
-//               <FormGroup>
-//                 <Label className={"UserForm-Title"} for={v}>
-//                   {formLabels[v]}
-//                 </Label>
-//                 <Input
-//                   type={v !== "password" ? "text" : "password"}
-//                   name={v}
-//                   id={v}
-//                   value={formData[v]}
-//                   onChange={handleChange}
-//                 />
-//               </FormGroup>
-//             ))}
-//             {formData.password ? (
-//               <Button color="primary" className="UserFrom-Button">
-//                 Save Changes
-//               </Button>
-//             ) : (
-//               <Button color="primary" className="UserFrom-Button" disabled>
-//                 Save Changes
-//               </Button>
-//             )}
-//           </Form>
-//         </Col>
-//       </Row>
-//     </Container>
-//   );
-// };
-
-// export default EditProfile;

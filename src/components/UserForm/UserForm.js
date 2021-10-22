@@ -1,5 +1,5 @@
 // 3rd Pary Imports
-import { MDBInput, MDBBtn, MDBContainer } from "mdb-react-ui-kit";
+import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 // Local Imports
 import Details from "../Details/Details";
