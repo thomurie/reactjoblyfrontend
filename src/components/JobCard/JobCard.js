@@ -1,14 +1,15 @@
 // 3rd party imports
 import {
+  MDBBtn,
   MDBCard,
   MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
   MDBCardSubTitle,
+  MDBCardText,
+  MDBCardTitle,
   MDBCol,
-  MDBBtn,
 } from "mdb-react-ui-kit";
 import { useContext, useState } from "react";
+
 // Local imports
 import JoblyApi from "../../helpers/api";
 import UserContext from "../../Contexts/UserContext";
@@ -50,8 +51,8 @@ const JobCard = ({ job }) => {
   return (
     <MDBCol>
       <MDBCard
-        style={{ backgroundColor: "#72B01D" }}
         className="text-white h-100"
+        style={{ backgroundColor: "#72B01D" }}
       >
         <MDBCardBody>
           <MDBCardTitle>{job.title}</MDBCardTitle>
@@ -67,7 +68,7 @@ const JobCard = ({ job }) => {
             )}
           </MDBCardText>
           {applied.indexOf(job.id) === -1 ? (
-            <MDBBtn onClick={handleClick} color="info">
+            <MDBBtn color="info" onClick={handleClick}>
               Apply
             </MDBBtn>
           ) : (
@@ -82,27 +83,3 @@ const JobCard = ({ job }) => {
 };
 
 export default JobCard;
-
-{
-  /* <ListGroupItem>
-  <ListGroupItemHeading>{job.title}</ListGroupItemHeading>
-  <ListGroupItemText>
-    <List type="inline">
-      <ListInlineItem>{job.companyName}</ListInlineItem>
-      <ListInlineItem>${job.salary}</ListInlineItem>
-      <ListInlineItem>
-        {job.equity && job.equity !== "0" ? <p>Equity: {job.equity}</p> : null}
-      </ListInlineItem>
-    </List>
-  </ListGroupItemText>
-  {applied.indexOf(job.id) === -1 ? (
-    <Button onClick={handleClick} color="info">
-      Apply
-    </Button>
-  ) : (
-    <Button color="info" disabled>
-      Applied
-    </Button>
-  )}
-</ListGroupItem>; */
-}

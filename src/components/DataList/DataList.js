@@ -1,5 +1,5 @@
 // 3rd Pary Imports
-import { MDBContainer, MDBRow, MDBBtn } from "mdb-react-ui-kit";
+import { MDBBtn, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -39,17 +39,17 @@ const DataList = ({ type }) => {
   let [formData, setFormData] = useState("");
   let [search, setSearch] = useState("");
   let [dataFields, setDataFields] = useState({
-    type: type,
-    name: "",
     description: "",
+    name: "",
     searchBar: false,
+    type: type,
   });
   let [data, setData] = useState({ cards: [], error: false });
 
   const errorHandling = () => {
     if (data.error && data.count === 1) {
       return (
-        <MDBBtn rounded color="warning" onClick={clearSearch}>
+        <MDBBtn color="warning" onClick={clearSearch} rounded>
           No Results, Click to Refresh
         </MDBBtn>
       );
@@ -68,10 +68,10 @@ const DataList = ({ type }) => {
     console.log("Render");
     if (type === "AllCompanies") {
       setDataFields({
-        type: type,
-        name: "Companies",
         description: "All the Wonderful Companies on Jobly",
+        name: "Companies",
         searchBar: true,
+        type: type,
       });
       /**
        * renders a CompanyCard for each company in the retrieved data
@@ -83,7 +83,6 @@ const DataList = ({ type }) => {
             setData(isError);
           }
           setData({
-            error: false,
             cards: [
               <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
                 {AllCompanyData.map((d) => (
@@ -91,6 +90,7 @@ const DataList = ({ type }) => {
                 ))}
               </MDBRow>,
             ],
+            error: false,
           });
         })
         .catch((err) => {
@@ -106,13 +106,12 @@ const DataList = ({ type }) => {
 
         .then((CompanyData) => {
           setDataFields({
-            type: type,
-            name: CompanyData.name,
             description: CompanyData.description,
+            name: CompanyData.name,
             searchBar: false,
+            type: type,
           });
           setData({
-            error: false,
             cards: [
               <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
                 {CompanyData.jobs.map((j) => (
@@ -120,6 +119,7 @@ const DataList = ({ type }) => {
                 ))}
               </MDBRow>,
             ],
+            error: false,
           });
         })
         .catch((err) => {
@@ -128,10 +128,10 @@ const DataList = ({ type }) => {
         });
     } else if (type === "AllJobs") {
       setDataFields({
-        type: type,
-        name: "Jobs",
         description: "Find Your Next Job on Jobly",
+        name: "Jobs",
         searchBar: true,
+        type: type,
       });
       /**
        * renders a JobCard for each company in the retrieved data
@@ -143,7 +143,6 @@ const DataList = ({ type }) => {
             setData(isError);
           }
           setData({
-            error: false,
             cards: [
               <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
                 {AllJobData.map((j) => (
@@ -151,6 +150,7 @@ const DataList = ({ type }) => {
                 ))}
               </MDBRow>,
             ],
+            error: false,
           });
         })
         .catch((err) => {
@@ -179,15 +179,15 @@ const DataList = ({ type }) => {
     <div style={{ backgroundColor: "#F3EFF5" }}>
       <MDBContainer>
         <Details
-          name={dataFields.name}
           description={dataFields.description}
+          name={dataFields.name}
         ></Details>
         {dataFields.searchBar ? (
           <SearchBar
-            search={formData}
             handleChange={handleChange}
-            handleSubmit={handleSubmit}
             handleClear={clearSearch}
+            handleSubmit={handleSubmit}
+            search={formData}
           ></SearchBar>
         ) : (
           <></>
@@ -199,18 +199,3 @@ const DataList = ({ type }) => {
 };
 
 export default DataList;
-// setData([
-//   <>
-//     {CompanyData.jobs.map((j) => (
-//       <JobCard job={j}></JobCard>
-//     ))}
-//   </>,
-// ]);
-
-// setData([
-//   <>
-//     {AllJobData.map((j) => (
-//       <JobCard job={j}></JobCard>
-//     ))}
-//   </>,
-// ]);

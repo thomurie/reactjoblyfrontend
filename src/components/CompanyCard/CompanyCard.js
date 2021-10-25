@@ -2,8 +2,8 @@
 import {
   MDBCard,
   MDBCardBody,
-  MDBCardTitle,
   MDBCardText,
+  MDBCardTitle,
   MDBCol,
 } from "mdb-react-ui-kit";
 import { useHistory } from "react-router-dom";
@@ -34,9 +34,9 @@ const CompanyCard = ({ company }) => {
   return (
     <MDBCol>
       <MDBCard
-        style={{ backgroundColor: "#72B01D" }}
         className="text-white h-100"
         onClick={viewCompany}
+        style={{ backgroundColor: "#72B01D" }}
       >
         <MDBCardBody>
           <MDBCardTitle>{company.name}</MDBCardTitle>

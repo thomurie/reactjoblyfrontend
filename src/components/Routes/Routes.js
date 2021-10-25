@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 // Local Imports
 import DataList from "../DataList/DataList";
@@ -40,7 +40,7 @@ import UserContext from "../../Contexts/UserContext";
  */
 
 const Routes = ({ login, signOut, signUp, updateUser }) => {
-  const { username, firstName, lastName, email } = useContext(UserContext);
+  const { email, firstName, lastName, username } = useContext(UserContext);
   return (
     <div>
       <BrowserRouter>
@@ -95,9 +95,9 @@ const Routes = ({ login, signOut, signUp, updateUser }) => {
             {username ? (
               <EditProfile
                 action={updateUser}
+                email={email}
                 firstName={firstName}
                 lastName={lastName}
-                email={email}
                 username={username}
               ></EditProfile>
             ) : (

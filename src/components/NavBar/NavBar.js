@@ -1,15 +1,15 @@
 // 3rd party imports
 import {
+  MDBBtn,
+  MDBCollapse,
   MDBContainer,
+  MDBIcon,
   MDBNavbar,
   MDBNavbarBrand,
-  MDBNavbarToggler,
-  MDBNavbarNav,
   MDBNavbarItem,
   MDBNavbarLink,
-  MDBIcon,
-  MDBCollapse,
-  MDBBtn,
+  MDBNavbarToggler,
+  MDBNavbarNav,
 } from "mdb-react-ui-kit";
 import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -55,7 +55,7 @@ const NavBar = ({ signOut }) => {
 
   return (
     <header>
-      <MDBNavbar expand="lg" light bgColor="light">
+      <MDBNavbar bgColor="light" expand="lg" light>
         <MDBContainer fluid>
           <MDBNavbarBrand>
             <Link style={{ color: "#72B01D" }} to="/">
@@ -67,7 +67,7 @@ const NavBar = ({ signOut }) => {
             aria-label="Toggle navigation"
             onClick={() => setShowNavSecond(!showNavSecond)}
           >
-            <MDBIcon icon="bars" fas />
+            <MDBIcon fas icon="bars" />
           </MDBNavbarToggler>
           <MDBCollapse navbar show={showNavSecond}>
             <MDBNavbarNav className="mb-2 mb-lg-0">
@@ -83,8 +83,8 @@ const NavBar = ({ signOut }) => {
                 <MDBNavbarItem>
                   <MDBNavbarLink>
                     <Link
-                      to={`/${route.toLowerCase()}`}
                       className=" text-dark NavBar-NavLink"
+                      to={`/${route.toLowerCase()}`}
                     >
                       {route}
                     </Link>

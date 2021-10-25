@@ -1,8 +1,7 @@
 // 3rd party imports
 import { MDBBtn } from "mdb-react-ui-kit";
-import { useContext, useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-// import { Jumbotron, Container, Button } from "reactstrap";
 
 // Local imports
 import "./Home.css";
@@ -51,10 +50,10 @@ const Home = ({ firstName }) => {
 
   const userIsFalse = [
     <>
-      <MDBBtn rounded className="mb-4" onClick={() => routeToPath("login")}>
+      <MDBBtn className="mb-4" onClick={() => routeToPath("login")} rounded>
         Login
       </MDBBtn>{" "}
-      <MDBBtn rounded className="mb-4" onClick={() => routeToPath("signup")}>
+      <MDBBtn className="mb-4" onClick={() => routeToPath("signup")} rounded>
         Sign Up
       </MDBBtn>
     </>,
@@ -75,7 +74,7 @@ const Home = ({ firstName }) => {
 
   return (
     <header>
-      <div id="intro-example" className="p-5 text-center bg-image">
+      <div className="p-5 text-center bg-image" id="intro-example">
         <div className="mask" style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}>
           <div className="d-flex justify-content-center align-items-center h-100">
             <div className="text-white">

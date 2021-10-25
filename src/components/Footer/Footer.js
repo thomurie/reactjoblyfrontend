@@ -1,13 +1,13 @@
 // 3rd party imports
 import {
-  MDBFooter,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
   MDBBtn,
   MDBBtnGroup,
+  MDBCol,
+  MDBContainer,
+  MDBFooter,
+  MDBRow,
 } from "mdb-react-ui-kit";
-import { useState, useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Local imports
@@ -24,12 +24,12 @@ const Footer = () => {
   }, [firstName]);
   return (
     <MDBFooter
-      style={{ backgroundColor: "#3F7D20" }}
       className="text-center text-lg-left text-white"
+      style={{ backgroundColor: "#3F7D20" }}
     >
       <MDBContainer className="p-4">
         <MDBRow>
-          <MDBCol lg="6" md="12" className="mb-4 mb-md-0">
+          <MDBCol className="mb-4 mb-md-0" lg="6" md="12">
             <h5 className="text-uppercase">Welcome To Jobly</h5>
 
             <p>
@@ -40,13 +40,13 @@ const Footer = () => {
             </p>
           </MDBCol>
 
-          <MDBCol lg="6" md="12" className="mb-4 mb-md-0">
+          <MDBCol className="mb-4 mb-md-0" lg="6" md="12">
             <MDBBtnGroup aria-label="Basic example">
               {routes.map((route) => (
                 <MDBBtn color="light" outline>
                   <Link
-                    to={`/${route.toLowerCase()}`}
                     className="NavBar-NavLink text-light"
+                    to={`/${route.toLowerCase()}`}
                   >
                     {route}
                   </Link>
