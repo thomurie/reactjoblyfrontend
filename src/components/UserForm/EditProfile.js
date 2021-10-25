@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 // Local Imports
 import Details from "../Details/Details";
 import Image from "../Images/annie-spratt-wgivdx9dBdQ-unsplash.jpg";
-import UserContext from "../../Contexts/UserContext";
 // Style
 import "./UserForm.css";
 

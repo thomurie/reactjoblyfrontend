@@ -1,6 +1,7 @@
 // 3rd Party Imports
 import { useEffect, useState } from "react";
 // Local imports
+import LoginLocalStorage from "../../Hooks/loginLocalStorage";
 import JoblyApi from "../../helpers/api";
 import Routes from "../Routes/Routes";
 import useLocalStorage from "../../Hooks/useLocalStorage";
@@ -34,12 +35,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
 
   const [localUser, updateLocalUser] = useLocalStorage();
-
-  // const history = useHistory();
-
-  // const routeToPath = (path) => {
-  //   history.push(`/${path}`);
-  // };
+  const [attempt, updateLoginAttempt] = LoginLocalStorage();
 
   /**
    * Summary.     Removes the user from the localStorage.
@@ -83,6 +79,7 @@ function App() {
     JoblyApi.getUser(username)
       .then((userData) => {
         setCurrentUser(userData);
+        updateLoginAttempt("remove");
       })
       .catch((err) => {
         alert(err);

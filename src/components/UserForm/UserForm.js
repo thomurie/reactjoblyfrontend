@@ -1,9 +1,11 @@
 // 3rd Pary Imports
 import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 // Local Imports
 import Details from "../Details/Details";
 import Image from "../Images/sean-pollock-PhYq704ffdA-unsplash.jpg";
+import LoginContext from "../../Contexts/LoginContext";
+import LoginLocalStorage from "../../Hooks/loginLocalStorage";
 // Style
 import "./UserForm.css";
 
@@ -24,17 +26,21 @@ import "./UserForm.css";
  * @return {ReactComponent}             Returns the UserForm Component with different data depending on value of type.
  */
 const UserForm = ({ action, type }) => {
+  const [attempt, updateLoginAttempt] = LoginLocalStorage();
+  const { lnEmail, lnFirstName, lnLastName, lnUsername } = attempt;
+
   const [formData, setFormData] = useState({});
   useEffect(() => {
+    updateLoginAttempt("obtain");
     setFormData(
       type === "Login"
         ? { username: "", password: "" }
         : {
-            username: "",
+            username: lnUsername,
             password: "",
-            firstName: "",
-            lastName: "",
-            email: "",
+            firstName: lnFirstName,
+            lastName: lnLastName,
+            email: lnEmail,
           }
     );
   }, [type, action]);
@@ -46,6 +52,7 @@ const UserForm = ({ action, type }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    updateLoginAttempt("add", formData);
     action(formData);
     setFormData({});
   };

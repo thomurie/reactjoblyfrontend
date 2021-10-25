@@ -48,8 +48,3 @@ const CompanyCard = ({ company }) => {
 };
 
 export default CompanyCard;
-
-//   <ListGroupItem tag="button" onClick={viewCompany}>
-//   <ListGroupItemHeading>{company.name}</ListGroupItemHeading>
-//   <ListGroupItemText>{company.description}</ListGroupItemText>
-// </ListGroupItem>
