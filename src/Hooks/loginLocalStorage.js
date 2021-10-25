@@ -24,7 +24,6 @@ function LoginLocalStorage() {
   const [attempt, setAttempt] = useState(loginAttempt);
 
   const updateLoginAttempt = (action, attemptData) => {
-    console.log(action, attemptData);
     if (action === "add") {
       localStorage.setItem("login_username", attemptData.username);
       localStorage.setItem("login_firstname", attemptData.firstName);
@@ -42,6 +41,7 @@ function LoginLocalStorage() {
       localStorage.setItem("login_firstname", "");
       localStorage.setItem("login_lastname", "");
       localStorage.setItem("login_email", "");
+
       setAttempt({
         lnUsername: "",
         lnFirstName: "",

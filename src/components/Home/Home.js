@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 
 // Local imports
 import "./Home.css";
-import UserContext from "../../Contexts/UserContext";
 
 /**
  * Summary.     Creates the Home Component based on UserContext
