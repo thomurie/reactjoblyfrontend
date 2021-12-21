@@ -1,8 +1,10 @@
 // 3rd Party Imports
 import { useEffect, useState } from "react";
+
 // Local imports
 import LoginLocalStorage from "../../Hooks/loginLocalStorage";
 import JoblyApi from "../../helpers/api";
+import MethodsContext from "../../Contexts/MethodsContext";
 import Routes from "../Routes/Routes";
 import useLocalStorage from "../../Hooks/useLocalStorage";
 import UserContext from "../../Contexts/UserContext";
@@ -165,6 +167,7 @@ function App() {
    *
    * @param {Object}   user    {username: string, password: string, firstName: string, lastName: string, email: string}
    */
+
   const updateUser = (user) => {
     const editUserData = {
       firstName: user.firstName,
@@ -183,6 +186,28 @@ function App() {
         console.error(err);
         signOut();
       });
+  };
+
+  /**
+   * Summary.     Uses data in localUser to update CurrentUser data
+   *
+   * Description. Based on localUser the signIN function is called to to retrieve and
+   * update the data in CurrentUser. If the data in localUser is missing the CurrentUser
+   * is set to a blank object.
+   *
+   * @see     signIn
+   * @see     setCurrentUser
+   *
+   * @fires   signIn
+   * @fires   setCurrentUser
+   *
+   */
+  const refreshUserData = () => {
+    if (localUser.username) {
+      signIn(localUser.token, localUser.username);
+    } else {
+      setCurrentUser({});
+    }
   };
 
   /**
@@ -209,14 +234,13 @@ function App() {
 
   return (
     <div className="App">
-      <UserContext.Provider value={currentUser}>
-        <Routes
-          login={login}
-          signOut={signOut}
-          signUp={signUp}
-          updateUser={updateUser}
-        ></Routes>
-      </UserContext.Provider>
+      <MethodsContext.Provider
+        value={{ login, signOut, signUp, updateUser, refreshUserData }}
+      >
+        <UserContext.Provider value={currentUser}>
+          <Routes></Routes>
+        </UserContext.Provider>
+      </MethodsContext.Provider>
     </div>
   );
 }

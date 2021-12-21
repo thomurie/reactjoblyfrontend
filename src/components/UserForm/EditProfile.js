@@ -1,10 +1,11 @@
 // 3rd Pary Imports
 import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 // Local Imports
 import Details from "../Details/Details";
 import Image from "../Images/annie-spratt-wgivdx9dBdQ-unsplash.jpg";
+import MethodsContext from "../../Contexts/MethodsContext";
 // Style
 import "./UserForm.css";
 
@@ -24,7 +25,11 @@ import "./UserForm.css";
  *
  * @return {ReactComponent}         Returns the EditProfile Component with the data from UserContext.
  */
-const EditProfile = ({ action, username, firstName, lastName, email }) => {
+const EditProfile = ({ username, firstName, lastName, email }) => {
+  const history = useHistory();
+
+  const { updateUser } = useContext(MethodsContext);
+
   const [formData, setFormData] = useState({
     firstName: firstName,
     lastName: lastName,
@@ -39,8 +44,8 @@ const EditProfile = ({ action, username, firstName, lastName, email }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    action(formData);
-    setFormData({});
+    updateUser(formData);
+    history.push("/");
   };
   return (
     <>

@@ -27,12 +27,14 @@ const SearchBar = ({ handleChange, handleClear, handleSubmit, search }) => {
       <MDBInputGroupElement
         placeholder="Enter Search Term"
         type="text"
-        onChange={handleChange}
         value={search}
+        onChange={handleChange}
       />
       {search ? (
         <>
-          <MDBBtn onClick={handleSubmit}>Search</MDBBtn>
+          <MDBBtn onClick={handleSubmit} type="submit">
+            Search
+          </MDBBtn>
           <MDBBtn onClick={handleClear}>Clear Search</MDBBtn>
         </>
       ) : (

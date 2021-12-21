@@ -1,10 +1,10 @@
 // 3rd Pary Imports
 import { MDBInput, MDBBtn } from "mdb-react-ui-kit";
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 // Local Imports
 import Details from "../Details/Details";
 import Image from "../Images/sean-pollock-PhYq704ffdA-unsplash.jpg";
-import LoginContext from "../../Contexts/LoginContext";
+import MethodsContext from "../../Contexts/MethodsContext";
 import LoginLocalStorage from "../../Hooks/loginLocalStorage";
 // Style
 import "./UserForm.css";
@@ -25,9 +25,13 @@ import "./UserForm.css";
  *
  * @return {ReactComponent}             Returns the UserForm Component with different data depending on value of type.
  */
-const UserForm = ({ action, type }) => {
+const UserForm = ({ type }) => {
   const [attempt, updateLoginAttempt] = LoginLocalStorage();
   const { lnEmail, lnFirstName, lnLastName, lnUsername } = attempt;
+  const { login, signUp } = useContext(MethodsContext);
+  let [error, setError] = useState("");
+
+  const action = type === "Login" ? login : signUp;
 
   const [formData, setFormData] = useState({});
   useEffect(() => {
@@ -67,6 +71,11 @@ const UserForm = ({ action, type }) => {
         <div className="d-flex justify-content-center align-items-center h-100">
           <div className="text-white">
             <Details name={type}></Details>
+            {error && (
+              <MDBTypography note noteColor="danger">
+                {error}
+              </MDBTypography>
+            )}
             {Object.keys(formData).map((v) => (
               <MDBInput
                 className="mt-3 text-white UserForm-Title"

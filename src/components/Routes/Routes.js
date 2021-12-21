@@ -39,12 +39,13 @@ import UserContext from "../../Contexts/UserContext";
  * @return {ReactComponent}   Returns the Routes Component which uses react-router-dom to render components based on path.
  */
 
-const Routes = ({ login, signOut, signUp, updateUser }) => {
+const Routes = () => {
   const { email, firstName, lastName, username } = useContext(UserContext);
+
   return (
     <div>
       <BrowserRouter>
-        <NavBar signOut={signOut}></NavBar>
+        <NavBar firstName={firstName}></NavBar>
         <Switch>
           {/* Home */}
           <Route exact path="/">
@@ -73,13 +74,14 @@ const Routes = ({ login, signOut, signUp, updateUser }) => {
             ) : (
               <Redirect to="/" />
             )}
+            );
           </Route>
           {/* Login */}
           <Route exact path="/login">
             {username ? (
               <Redirect to="/" />
             ) : (
-              <UserForm action={login} type={"Login"}></UserForm>
+              <UserForm type={"Login"}></UserForm>
             )}
           </Route>
           {/* Signup */}
@@ -87,14 +89,13 @@ const Routes = ({ login, signOut, signUp, updateUser }) => {
             {username ? (
               <Redirect to="/" />
             ) : (
-              <UserForm action={signUp} type={"Signup"}></UserForm>
+              <UserForm type={"Signup"}></UserForm>
             )}
           </Route>
           {/* Profile */}
           <Route exact path="/profile">
             {username ? (
               <EditProfile
-                action={updateUser}
                 email={email}
                 firstName={firstName}
                 lastName={lastName}

@@ -15,6 +15,7 @@ import { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 // Local imports
+import MethodsContext from "../../Contexts/MethodsContext";
 import UserContext from "../../Contexts/UserContext";
 // Style
 import "./NavBar.css";
@@ -42,10 +43,10 @@ import "./NavBar.css";
  * @return {ReactComponent}     Returns the NavBar Component with different data depending on value of UserContext.
  */
 
-const NavBar = ({ signOut }) => {
+const NavBar = ({ firstName }) => {
   const [showNavSecond, setShowNavSecond] = useState(false);
   const [routes, setRoutes] = useState(["Login", "Signup"]);
-  const { firstName } = useContext(UserContext);
+  const { signOut } = useContext(MethodsContext);
 
   useEffect(() => {
     setRoutes(

@@ -41,6 +41,7 @@ import UserContext from "../../Contexts/UserContext";
 
 const JobCard = ({ job }) => {
   const { username, applications } = useContext(UserContext);
+
   const [applied, setApplied] = useState(applications);
 
   const handleClick = () => {
