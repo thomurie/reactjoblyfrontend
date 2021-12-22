@@ -1,10 +1,8 @@
 // Local Imports
-import Details from "./Details/Details";
-import Image from "./Images/sean-pollock-PhYq704ffdA-unsplash.jpg";
-import ErrorMsg from "./ErrorMsg";
-import UserForm from "./UserForm/UserForm";
-// Style
-// import "./UserForm.css";
+import Details from "../Details/Details";
+import Image from "../Images/sean-pollock-PhYq704ffdA-unsplash.jpg";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
+import UserForm from "./UserForm";
 
 /**
  * Summary.     Defines the UserForm Component with different data depending on value of type.

@@ -1,9 +1,9 @@
 // 3rd Pary Imports
 import { MDBTypography } from "mdb-react-ui-kit";
 import { useContext } from "react";
+
 // Local Imports
-import MethodsContext from "../Contexts/MethodsContext";
-// Style
+import MethodsContext from "../../Contexts/MethodsContext";
 
 /**
  * Summary.     Defines the UserForm Component with different data depending on value of type.
@@ -23,13 +23,11 @@ import MethodsContext from "../Contexts/MethodsContext";
  */
 const ErrorMsg = () => {
   const { error } = useContext(MethodsContext);
-
   return (
     error.msg && (
       <MDBTypography
         note
-        style={{ backgroundColor: `${error.color}` }}
-        Color="danger"
+        style={{ backgroundColor: `${error.color}`, color: "white" }}
       >
         {error.msg}
       </MDBTypography>

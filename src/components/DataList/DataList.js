@@ -10,7 +10,7 @@ import JobCard from "../JobCard/JobCard";
 import JoblyApi from "../../helpers/api";
 import MethodsContext from "../../Contexts/MethodsContext";
 import SearchBar from "../SearchBar/SearchBar";
-import ErrorMsg from "../ErrorMsg";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
 /**
  * Summary.         Creates a react component based on the type of data being requested.
  *

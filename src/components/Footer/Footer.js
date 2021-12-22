@@ -1,17 +1,13 @@
 // 3rd party imports
-import {
-  MDBBtn,
-  MDBBtnGroup,
-  MDBCol,
-  MDBContainer,
-  MDBFooter,
-  MDBRow,
-} from "mdb-react-ui-kit";
+import { MDBCol, MDBContainer, MDBFooter, MDBRow } from "mdb-react-ui-kit";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Local imports
 import UserContext from "../../Contexts/UserContext";
+
+// Style
+import "./Footer.css";
 
 const Footer = () => {
   const INITAL_ROUTES = ["Companies", "Jobs"];
@@ -44,18 +40,16 @@ const Footer = () => {
           </MDBCol>
 
           <MDBCol className="mb-4 mb-md-0" lg="6" md="12">
-            <MDBBtnGroup aria-label="Basic example">
-              {routes.map((route) => (
-                <MDBBtn color="light" outline>
-                  <Link
-                    className="NavBar-NavLink text-light"
-                    to={`/${route.toLowerCase()}`}
-                  >
-                    {route}
-                  </Link>
-                </MDBBtn>
-              ))}
-            </MDBBtnGroup>
+            <h6 style={{ textDecoration: "underline" }}>Site Map</h6>
+            {routes.map((route) => (
+              <Link
+                className="NavBar-NavLink text-light"
+                to={`/${route.toLowerCase()}`}
+              >
+                {route}
+                <br />
+              </Link>
+            ))}
           </MDBCol>
         </MDBRow>
       </MDBContainer>

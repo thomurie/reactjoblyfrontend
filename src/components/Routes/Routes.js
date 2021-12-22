@@ -6,11 +6,9 @@ import DataList from "../DataList/DataList";
 import Footer from "../Footer/Footer";
 import Home from "../Home/Home";
 import NavBar from "../NavBar/NavBar";
-import UpdateUser from "../UpdateUser";
-
-// Local Imports
+import UpdateUser from "../UserForm/UpdateUser";
 import UserContext from "../../Contexts/UserContext";
-import DisplayForm from "../DisplayForm";
+import DisplayForm from "../UserForm/DisplayForm";
 
 /**
  * Summary.     Uses react-router to render components based on the path.
@@ -40,7 +38,7 @@ import DisplayForm from "../DisplayForm";
  */
 
 const Routes = () => {
-  const { email, firstName, lastName, username } = useContext(UserContext);
+  const { firstName, username } = useContext(UserContext);
 
   return (
     <div>

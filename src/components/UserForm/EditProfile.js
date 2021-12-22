@@ -5,6 +5,7 @@ import { useState, useContext } from "react";
 // Local Imports
 import MethodsContext from "../../Contexts/MethodsContext";
 import UserContext from "../../Contexts/UserContext";
+
 // Style
 import "./UserForm.css";
 

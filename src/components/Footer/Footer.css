@@ -1,0 +1,9 @@
+.NavBar-NavLink {
+  text-decoration: none;
+}
+
+.NavBar-NavLink:hover {
+  color: black;
+  transition: 0.4s;
+  text-decoration: underline;
+}

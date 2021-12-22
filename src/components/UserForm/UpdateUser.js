@@ -1,10 +1,8 @@
 // Local Imports
-import Details from "./Details/Details";
-import Image from "./Images/annie-spratt-wgivdx9dBdQ-unsplash.jpg";
-import ErrorMsg from "./ErrorMsg";
-import EditProfile from "./UserForm/EditProfile";
-// Style
-// import "./UserForm.css";
+import Details from "../Details/Details";
+import Image from "../Images/annie-spratt-wgivdx9dBdQ-unsplash.jpg";
+import ErrorMsg from "../ErrorMsg/ErrorMsg";
+import EditProfile from "./EditProfile";
 
 /**
  * Summary.     Defines the UserForm Component with different data depending on value of type.
@@ -22,7 +20,7 @@ import EditProfile from "./UserForm/EditProfile";
  *
  * @return {ReactComponent}             Returns the UserForm Component with different data depending on value of type.
  */
-const DisplayForm = ({ type }) => {
+const UpdateUser = () => {
   return (
     <div
       id="UserForm-Login"
@@ -52,4 +50,4 @@ const DisplayForm = ({ type }) => {
   );
 };
 
-export default DisplayForm;
+export default UpdateUser;

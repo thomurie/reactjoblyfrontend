@@ -1,7 +1,6 @@
 #UserForm-Login {
   height: 65vh;
   width: 100;
-  /* background: url("../Images/sean-pollock-PhYq704ffdA-unsplash.jpg"); */
   background-size: auto 90vh;
 }
 
@@ -21,8 +20,3 @@
 .form-outline .form-control[readonly] {
   background-color: transparent;
 }
-
-/* .UserFrom-Button {
-  margin-top: 1.5rem;
-  width: 100%;
-} */
