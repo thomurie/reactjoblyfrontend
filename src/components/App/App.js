@@ -35,10 +35,9 @@ import "./App.css";
  */
 function App() {
   const [currentUser, setCurrentUser] = useState({});
-
+  const [error, setError] = useState({ msg: "", color: "red" });
   const [localUser, updateLocalUser] = useLocalStorage();
-  const [attempt, updateLoginAttempt] = LoginLocalStorage();
-
+  const [updateLoginAttempt] = LoginLocalStorage();
   /**
    * Summary.     Removes the user from the localStorage.
    *
@@ -55,6 +54,7 @@ function App() {
   const signOut = () => {
     JoblyApi.token = "";
     updateLocalUser("remove");
+    setError({ msg: "Automatically Signed Out", color: "red" });
   };
 
   /**
@@ -84,8 +84,7 @@ function App() {
         updateLoginAttempt("remove");
       })
       .catch((err) => {
-        alert(err);
-        console.error(err);
+        setError({ msg: err[0], color: "red" });
         signOut();
       });
   };
@@ -113,7 +112,7 @@ function App() {
         updateLocalUser("add", { token: resToken, username: user.username });
       })
       .catch((err) => {
-        alert(err[0]);
+        setError({ msg: err[0], color: "red" });
         signOut();
       });
   };
@@ -143,9 +142,7 @@ function App() {
         updateLocalUser("add", { token: resToken, username: user.username });
       })
       .catch((err) => {
-        err.forEach((msg) => {
-          alert(msg);
-        });
+        setError({ msg: err[0], color: "red" });
         signOut();
       });
   };
@@ -181,10 +178,10 @@ function App() {
           token: localUser.token,
           username: localUser.username,
         });
+        setError({ msg: "Profile updated successfully", color: "green" });
       })
       .catch((err) => {
-        console.error(err);
-        signOut();
+        setError({ msg: err[0], color: "red" });
       });
   };
 
@@ -235,10 +232,18 @@ function App() {
   return (
     <div className="App">
       <MethodsContext.Provider
-        value={{ login, signOut, signUp, updateUser, refreshUserData }}
+        value={{
+          error,
+          setError,
+          login,
+          signOut,
+          signUp,
+          updateUser,
+          refreshUserData,
+        }}
       >
         <UserContext.Provider value={currentUser}>
-          <Routes></Routes>
+          <Routes />
         </UserContext.Provider>
       </MethodsContext.Provider>
     </div>

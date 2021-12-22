@@ -3,14 +3,14 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 // Local Imports
 import DataList from "../DataList/DataList";
-import EditProfile from "../UserForm/EditProfile";
 import Footer from "../Footer/Footer";
 import Home from "../Home/Home";
 import NavBar from "../NavBar/NavBar";
-import UserForm from "../UserForm/UserForm";
+import UpdateUser from "../UpdateUser";
 
 // Local Imports
 import UserContext from "../../Contexts/UserContext";
+import DisplayForm from "../DisplayForm";
 
 /**
  * Summary.     Uses react-router to render components based on the path.
@@ -45,70 +45,40 @@ const Routes = () => {
   return (
     <div>
       <BrowserRouter>
-        <NavBar firstName={firstName}></NavBar>
+        <NavBar firstName={firstName} />
         <Switch>
           {/* Home */}
           <Route exact path="/">
-            {username ? <Home firstName={firstName}></Home> : <Home></Home>}
+            <Home firstName={firstName} />
           </Route>
           {/* Companies */}
           <Route exact path="/companies">
-            {username ? (
-              <DataList type="AllCompanies"></DataList>
-            ) : (
-              <Redirect to="/" />
-            )}
+            <DataList type="AllCompanies" />
           </Route>
           {/* Company Details */}
           <Route exact path="/companies/:handle">
-            {username ? (
-              <DataList type="Company"></DataList>
-            ) : (
-              <Redirect to="/" />
-            )}
+            <DataList type="Company" />
           </Route>
           {/* Jobs */}
           <Route exact path="/jobs">
-            {username ? (
-              <DataList type="AllJobs"></DataList>
-            ) : (
-              <Redirect to="/" />
-            )}
-            );
+            <DataList type="AllJobs" />
           </Route>
           {/* Login */}
           <Route exact path="/login">
-            {username ? (
-              <Redirect to="/" />
-            ) : (
-              <UserForm type={"Login"}></UserForm>
-            )}
+            {username ? <Redirect to="/" /> : <DisplayForm type="Login" />}
           </Route>
           {/* Signup */}
           <Route exact path="/signup">
-            {username ? (
-              <Redirect to="/" />
-            ) : (
-              <UserForm type={"Signup"}></UserForm>
-            )}
+            {username ? <Redirect to="/" /> : <DisplayForm type={"Signup"} />}
           </Route>
           {/* Profile */}
           <Route exact path="/profile">
-            {username ? (
-              <EditProfile
-                email={email}
-                firstName={firstName}
-                lastName={lastName}
-                username={username}
-              ></EditProfile>
-            ) : (
-              <Redirect to="/" />
-            )}
+            {username ? <UpdateUser /> : <Redirect to="/" />}
           </Route>
           {/* Handle All Other Requests */}
           <Redirect to="/" />
         </Switch>
-        <Footer></Footer>
+        <Footer />
       </BrowserRouter>
     </div>
   );

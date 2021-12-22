@@ -14,14 +14,17 @@ import { Link } from "react-router-dom";
 import UserContext from "../../Contexts/UserContext";
 
 const Footer = () => {
-  const [routes, setRoutes] = useState(["Login", "Signup"]);
+  const INITAL_ROUTES = ["Companies", "Jobs"];
+  const [routes, setRoutes] = useState(INITAL_ROUTES);
   const { firstName } = useContext(UserContext);
 
   useEffect(() => {
-    setRoutes(
-      firstName ? ["Companies", "Jobs", "Profile"] : ["Login", "Signup"]
-    );
+    const userRoutes = firstName
+      ? [...INITAL_ROUTES, "Profile"]
+      : [...INITAL_ROUTES, "Login", "Signup"];
+    setRoutes(userRoutes);
   }, [firstName]);
+
   return (
     <MDBFooter
       className="text-center text-lg-left text-white"
@@ -33,10 +36,10 @@ const Footer = () => {
             <h5 className="text-uppercase">Welcome To Jobly</h5>
 
             <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste
-              atque ea quis molestias. Fugiat pariatur maxime quis culpa
-              corporis vitae repudiandae aliquam voluptatem veniam, est atque
-              cumque eum delectus sint!
+              Your next opportunity is waiting for you. Finding it starts with
+              Jobly. Search by role or company. Find new and exciting companies
+              on our Companies page. Find and apply to your next job using our
+              Jobs page.
             </p>
           </MDBCol>
 

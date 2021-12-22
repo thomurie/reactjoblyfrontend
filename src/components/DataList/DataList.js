@@ -1,11 +1,5 @@
 // 3rd Pary Imports
-import {
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  Alert,
-  MDBTypography,
-} from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow } from "mdb-react-ui-kit";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -16,7 +10,7 @@ import JobCard from "../JobCard/JobCard";
 import JoblyApi from "../../helpers/api";
 import MethodsContext from "../../Contexts/MethodsContext";
 import SearchBar from "../SearchBar/SearchBar";
-
+import ErrorMsg from "../ErrorMsg";
 /**
  * Summary.         Creates a react component based on the type of data being requested.
  *
@@ -43,7 +37,7 @@ import SearchBar from "../SearchBar/SearchBar";
 const DataList = ({ type }) => {
   const { handle } = useParams();
 
-  const { refreshUserData } = useContext(MethodsContext);
+  const { refreshUserData, setError } = useContext(MethodsContext);
 
   let [formData, setFormData] = useState("");
   let [search, setSearch] = useState("");
@@ -53,8 +47,7 @@ const DataList = ({ type }) => {
     searchBar: false,
     type: type,
   });
-  let [data, setData] = useState({ cards: [], error: false });
-  let [error, setError] = useState("");
+  let [data, setData] = useState([]);
 
   /**
    * Set the data based on the type of data being rendered.
@@ -74,22 +67,26 @@ const DataList = ({ type }) => {
       JoblyApi.allCompanies(search)
         .then((AllCompanyData) => {
           if (AllCompanyData.length > 0) {
-            setData({
-              cards: [
-                <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
-                  {AllCompanyData.map((d) => (
-                    <CompanyCard company={d}></CompanyCard>
-                  ))}
-                </MDBRow>,
-              ],
-              error: false,
-            });
+            setData([
+              <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+                {AllCompanyData.map((d) => (
+                  <CompanyCard company={d}></CompanyCard>
+                ))}
+              </MDBRow>,
+            ]);
+            setError({ msg: "", color: "green" });
           } else {
-            setError("No results found. Please try again.");
+            setError({
+              msg: "No results found. Please try again.",
+              color: "red",
+            });
           }
         })
         .catch((err) => {
-          setError(err.message);
+          setError({
+            msg: err.message,
+            color: "red",
+          });
         });
     } else if (type === "Company") {
       /**
@@ -105,20 +102,20 @@ const DataList = ({ type }) => {
             searchBar: false,
             type: type,
           });
-          setData({
-            cards: [
-              <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
-                {CompanyData.jobs.map((j) => (
-                  <JobCard job={j}></JobCard>
-                ))}
-              </MDBRow>,
-            ],
-            error: false,
-          });
+          setData([
+            <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+              {CompanyData.jobs.map((j) => (
+                <JobCard job={j}></JobCard>
+              ))}
+            </MDBRow>,
+          ]);
+          setError({ msg: "", color: "green" });
         })
         .catch((err) => {
-          setError("Error finding data. Please try again.");
-          setData([]);
+          setError({
+            msg: "Error finding data. Please try again.",
+            color: "red",
+          });
         });
     } else if (type === "AllJobs") {
       setDataFields({
@@ -133,23 +130,26 @@ const DataList = ({ type }) => {
       JoblyApi.allJobs(search)
         .then((AllJobData) => {
           if (AllJobData.length > 0) {
-            setData({
-              cards: [
-                <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
-                  {AllJobData.map((j) => (
-                    <JobCard job={j}></JobCard>
-                  ))}
-                </MDBRow>,
-              ],
-              error: false,
-            });
+            setData([
+              <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+                {AllJobData.map((j) => (
+                  <JobCard job={j}></JobCard>
+                ))}
+              </MDBRow>,
+            ]);
+            setError({ msg: "", color: "green" });
           } else {
-            setError("No results found. Please try again.");
+            setError({
+              msg: "No results found. Please try again.",
+              color: "red",
+            });
           }
         })
         .catch((err) => {
-          setError(err.message);
-          setData([]);
+          setError({
+            msg: err.message,
+            color: "red",
+          });
         });
     }
   }, [type, search]);
@@ -167,7 +167,7 @@ const DataList = ({ type }) => {
 
   const clearSearch = () => {
     setFormData("");
-    setError("");
+    setError({ msg: "", color: "green" });
     setSearch("");
   };
 
@@ -175,11 +175,7 @@ const DataList = ({ type }) => {
     <div style={{ backgroundColor: "#F3EFF5" }}>
       <MDBContainer>
         <Details description={dataFields.description} name={dataFields.name} />
-        {error && (
-          <MDBTypography note noteColor="danger">
-            {error}
-          </MDBTypography>
-        )}
+        <ErrorMsg />
         {dataFields.searchBar && (
           <SearchBar
             handleChange={handleChange}
@@ -188,7 +184,7 @@ const DataList = ({ type }) => {
             search={formData}
           ></SearchBar>
         )}
-        {data.cards}
+        {data}
       </MDBContainer>
     </div>
   );

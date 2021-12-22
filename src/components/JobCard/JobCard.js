@@ -9,6 +9,7 @@ import {
   MDBCol,
 } from "mdb-react-ui-kit";
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 
 // Local imports
 import JoblyApi from "../../helpers/api";
@@ -68,13 +69,21 @@ const JobCard = ({ job }) => {
               "401K | Health | Dental"
             )}
           </MDBCardText>
-          {applied.indexOf(job.id) === -1 ? (
-            <MDBBtn color="info" onClick={handleClick}>
-              Apply
-            </MDBBtn>
+          {username ? (
+            applied.indexOf(job.id) === -1 ? (
+              <MDBBtn color="info" onClick={handleClick}>
+                Apply
+              </MDBBtn>
+            ) : (
+              <MDBBtn color="info" disabled>
+                Applied
+              </MDBBtn>
+            )
           ) : (
-            <MDBBtn color="info" disabled>
-              Applied
+            <MDBBtn color="light" outline>
+              <Link className="NavBar-NavLink text-light" to={`/login`}>
+                Login to apply
+              </Link>
             </MDBBtn>
           )}
         </MDBCardBody>

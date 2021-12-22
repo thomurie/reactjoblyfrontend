@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 
 // Local imports
 import MethodsContext from "../../Contexts/MethodsContext";
-import UserContext from "../../Contexts/UserContext";
+
 // Style
 import "./NavBar.css";
 
@@ -44,14 +44,16 @@ import "./NavBar.css";
  */
 
 const NavBar = ({ firstName }) => {
+  const INITAL_ROUTES = ["Companies", "Jobs"];
   const [showNavSecond, setShowNavSecond] = useState(false);
-  const [routes, setRoutes] = useState(["Login", "Signup"]);
+  const [routes, setRoutes] = useState(INITAL_ROUTES);
   const { signOut } = useContext(MethodsContext);
 
   useEffect(() => {
-    setRoutes(
-      firstName ? ["Companies", "Jobs", "Profile"] : ["Login", "Signup"]
-    );
+    const userRoutes = firstName
+      ? [...INITAL_ROUTES, "Profile"]
+      : [...INITAL_ROUTES, "Login", "Signup"];
+    setRoutes(userRoutes);
   }, [firstName]);
 
   return (
