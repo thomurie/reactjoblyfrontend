@@ -1,8 +1,14 @@
+// 3rd Party Imports
+import { MDBBtn } from "mdb-react-ui-kit";
+import { useContext, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
 // Local Imports
 import Details from "../Details/Details";
 import Image from "../Images/annie-spratt-wgivdx9dBdQ-unsplash.jpg";
 import ErrorMsg from "../ErrorMsg/ErrorMsg";
-import EditProfile from "./EditProfile";
+import UpdateUserForm from "./UpdateUserForm";
+import MethodsContext from "../../Contexts/MethodsContext";
 
 /**
  * Summary.     Defines the UserForm Component with different data depending on value of type.
@@ -21,6 +27,17 @@ import EditProfile from "./EditProfile";
  * @return {ReactComponent}             Returns the UserForm Component with different data depending on value of type.
  */
 const UpdateUser = () => {
+  const history = useHistory();
+  const { signOut, setError } = useContext(MethodsContext);
+
+  useEffect(() => {
+    setError({ msg: "", color: "green" });
+  }, []);
+
+  const handleSignOut = () => {
+    signOut();
+    history.push("/");
+  };
   return (
     <div
       id="UserForm-Login"
@@ -32,7 +49,10 @@ const UpdateUser = () => {
           <div className="text-white">
             <Details name="Edit Profile"></Details>
             <ErrorMsg />
-            <EditProfile />
+            <UpdateUserForm />
+            <div className="d-grid gap-2 mt-3 mb-4">
+              <MDBBtn onClick={handleSignOut}>Sign Out</MDBBtn>
+            </div>
             <h6 classname="mt-3">
               Photo by{" "}
               <a href="https://unsplash.com/@anniespratt?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">

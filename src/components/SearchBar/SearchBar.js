@@ -23,27 +23,29 @@ import { MDBInputGroup, MDBInputGroupElement, MDBBtn } from "mdb-react-ui-kit";
 
 const SearchBar = ({ handleChange, handleClear, handleSubmit, search }) => {
   return (
-    <MDBInputGroup className="mb-3">
-      <MDBInputGroupElement
-        placeholder="Enter Search Term"
-        type="text"
-        value={search}
-        onChange={handleChange}
-      />
-      {search ? (
-        <>
-          <MDBBtn onClick={handleSubmit} type="submit">
-            Search
-          </MDBBtn>
-          <MDBBtn onClick={handleClear}>Clear Search</MDBBtn>
-        </>
-      ) : (
-        <>
-          <MDBBtn disabled>Search</MDBBtn>
-          <MDBBtn disabled>Clear Search</MDBBtn>
-        </>
-      )}
-    </MDBInputGroup>
+    <form onSubmit={handleSubmit}>
+      <MDBInputGroup className="mb-3">
+        <MDBInputGroupElement
+          placeholder="Enter Search Term"
+          type="text"
+          value={search}
+          onChange={handleChange}
+        />
+        {search ? (
+          <>
+            <button className="btn btn-primary" type="submit">
+              Search
+            </button>
+            <MDBBtn onClick={handleClear}>Clear</MDBBtn>
+          </>
+        ) : (
+          <>
+            <MDBBtn disabled>Search</MDBBtn>
+            <MDBBtn disabled>Clear</MDBBtn>
+          </>
+        )}
+      </MDBInputGroup>
+    </form>
   );
 };
 

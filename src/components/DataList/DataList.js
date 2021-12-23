@@ -68,9 +68,12 @@ const DataList = ({ type }) => {
         .then((AllCompanyData) => {
           if (AllCompanyData.length > 0) {
             setData([
-              <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+              <MDBRow
+                key={AllCompanyData.length}
+                className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2"
+              >
                 {AllCompanyData.map((d) => (
-                  <CompanyCard company={d}></CompanyCard>
+                  <CompanyCard key={d.name} company={d}></CompanyCard>
                 ))}
               </MDBRow>,
             ]);
@@ -103,9 +106,12 @@ const DataList = ({ type }) => {
             type: type,
           });
           setData([
-            <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+            <MDBRow
+              key={CompanyData.name}
+              className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2"
+            >
               {CompanyData.jobs.map((j) => (
-                <JobCard job={j}></JobCard>
+                <JobCard key={j.id} job={j}></JobCard>
               ))}
             </MDBRow>,
           ]);
@@ -131,9 +137,12 @@ const DataList = ({ type }) => {
         .then((AllJobData) => {
           if (AllJobData.length > 0) {
             setData([
-              <MDBRow className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2">
+              <MDBRow
+                key={AllJobData.length}
+                className="row-cols-1 row-cols-md-3 g-4 mt-2 mb-2"
+              >
                 {AllJobData.map((j) => (
-                  <JobCard job={j}></JobCard>
+                  <JobCard key={j.id} job={j}></JobCard>
                 ))}
               </MDBRow>,
             ]);

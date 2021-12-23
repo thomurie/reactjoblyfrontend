@@ -16,7 +16,7 @@
 
 const Details = ({ description, name }) => {
   return (
-    <div>
+    <div className="pt-4">
       <h1 className="mb-3">{name}</h1>
       <h5 className="mb-4">{description}</h5>
     </div>

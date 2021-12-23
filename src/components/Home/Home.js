@@ -1,5 +1,4 @@
 // 3rd party imports
-import { MDBBtn } from "mdb-react-ui-kit";
 import { useHistory } from "react-router-dom";
 
 // Local imports
@@ -41,21 +40,21 @@ const Home = () => {
               <h5 className="mb-4">
                 Find Your Next Great Opporutnity With Jobly
               </h5>
-              <MDBBtn
-                className="mb-4 mr-4"
-                onClick={() => routeToPath("jobs")}
-                rounded
-              >
-                Jobs
-              </MDBBtn>
-              <MDBBtn
-                className="mb-4"
-                onClick={() => routeToPath("companies")}
-                rounded
-              >
-                Companies
-              </MDBBtn>
-              <h6 classname="mt-3">
+              <div className="mb-4">
+                <button
+                  className="me-4 btn btn-primary"
+                  onClick={() => routeToPath("jobs")}
+                >
+                  Jobs
+                </button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => routeToPath("companies")}
+                >
+                  Companies
+                </button>
+              </div>
+              <h6 className="mt-3">
                 Photo by{" "}
                 <a href="https://unsplash.com/@christinhumephoto?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
                   Christin Hume

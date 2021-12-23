@@ -1,3 +1,7 @@
+// 3rd Party Imports
+import { useEffect, useContext } from "react";
+import MethodsContext from "../../Contexts/MethodsContext";
+
 // Local Imports
 import Details from "../Details/Details";
 import Image from "../Images/sean-pollock-PhYq704ffdA-unsplash.jpg";
@@ -21,6 +25,12 @@ import UserForm from "./UserForm";
  * @return {ReactComponent}             Returns the UserForm Component with different data depending on value of type.
  */
 const DisplayForm = ({ type }) => {
+  const { setError } = useContext(MethodsContext);
+
+  useEffect(() => {
+    setError({ msg: "", color: "green" });
+  }, [type]);
+
   return (
     <div
       id="UserForm-Login"
@@ -33,7 +43,7 @@ const DisplayForm = ({ type }) => {
             <Details name={type}></Details>
             <ErrorMsg />
             <UserForm type={type} />
-            <h6 classname="mt-3">
+            <h6 className="mt-3">
               Photo by{" "}
               <a href="https://unsplash.com/@seanpollock?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
                 Sean Pollock

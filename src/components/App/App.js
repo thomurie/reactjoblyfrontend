@@ -39,6 +39,7 @@ function App() {
   const [error, setError] = useState({ msg: "", color: "red" });
   const [localUser, updateLocalUser] = useLocalStorage();
   const [attempt, updateLoginAttempt] = LoginLocalStorage();
+
   /**
    * Summary.     Removes the user from the localStorage.
    *

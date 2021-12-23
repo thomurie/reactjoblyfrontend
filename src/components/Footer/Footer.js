@@ -43,6 +43,7 @@ const Footer = () => {
             <h6 style={{ textDecoration: "underline" }}>Site Map</h6>
             {routes.map((route) => (
               <Link
+                key={route}
                 className="NavBar-NavLink text-light"
                 to={`/${route.toLowerCase()}`}
               >

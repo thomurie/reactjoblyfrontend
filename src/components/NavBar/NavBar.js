@@ -1,6 +1,5 @@
 // 3rd party imports
 import {
-  MDBBtn,
   MDBCollapse,
   MDBContainer,
   MDBIcon,
@@ -11,11 +10,8 @@ import {
   MDBNavbarToggler,
   MDBNavbarNav,
 } from "mdb-react-ui-kit";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-// Local imports
-import MethodsContext from "../../Contexts/MethodsContext";
 
 // Style
 import "./NavBar.css";
@@ -47,11 +43,10 @@ const NavBar = ({ firstName }) => {
   const INITAL_ROUTES = ["Companies", "Jobs"];
   const [showNavSecond, setShowNavSecond] = useState(false);
   const [routes, setRoutes] = useState(INITAL_ROUTES);
-  const { signOut } = useContext(MethodsContext);
 
   useEffect(() => {
     const userRoutes = firstName
-      ? [...INITAL_ROUTES, "Profile"]
+      ? [...INITAL_ROUTES]
       : [...INITAL_ROUTES, "Login", "Signup"];
     setRoutes(userRoutes);
   }, [firstName]);
@@ -83,7 +78,7 @@ const NavBar = ({ firstName }) => {
               </MDBNavbarItem>
 
               {routes.map((route) => (
-                <MDBNavbarItem>
+                <MDBNavbarItem key={route}>
                   <MDBNavbarLink>
                     <Link
                       className=" text-dark NavBar-NavLink"
@@ -95,15 +90,18 @@ const NavBar = ({ firstName }) => {
                 </MDBNavbarItem>
               ))}
 
-              {firstName ? (
+              {firstName && (
                 <MDBNavbarItem>
-                  <MDBBtn
-                    color="dark"
-                    onClick={signOut}
-                  >{`Log Out ${firstName}`}</MDBBtn>
+                  <MDBNavbarLink>
+                    <Link
+                      style={{ color: "#72B01D" }}
+                      className=" NavBar-NavLink"
+                      to={`/profile`}
+                    >
+                      {`Hi ${firstName}`}
+                    </Link>
+                  </MDBNavbarLink>
                 </MDBNavbarItem>
-              ) : (
-                <></>
               )}
             </MDBNavbarNav>
           </MDBCollapse>

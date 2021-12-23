@@ -9,7 +9,7 @@ import {
   MDBCol,
 } from "mdb-react-ui-kit";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 // Local imports
 import JoblyApi from "../../helpers/api";
@@ -41,6 +41,7 @@ import UserContext from "../../Contexts/UserContext";
  */
 
 const JobCard = ({ job }) => {
+  const history = useHistory();
   const { username, applications } = useContext(UserContext);
 
   const [applied, setApplied] = useState(applications);
@@ -70,7 +71,7 @@ const JobCard = ({ job }) => {
             )}
           </MDBCardText>
           {username ? (
-            applied.indexOf(job.id) === -1 ? (
+            applied?.indexOf(job.id) === -1 ? (
               <MDBBtn color="info" onClick={handleClick}>
                 Apply
               </MDBBtn>
@@ -80,10 +81,12 @@ const JobCard = ({ job }) => {
               </MDBBtn>
             )
           ) : (
-            <MDBBtn color="light" outline>
-              <Link className="NavBar-NavLink text-light" to={`/login`}>
-                Login to apply
-              </Link>
+            <MDBBtn
+              color="light"
+              outline
+              onClick={() => history.push("/login")}
+            >
+              Login to apply
             </MDBBtn>
           )}
         </MDBCardBody>
