@@ -68,8 +68,6 @@ Some sample questions:
 (2) Did you use TDD or another process to write your tests?
 (3) What is your testing philosophy both on the front-end and backend? -->
 
-7
-
 ### Deployment and next steps:
 
 This application was deployed using a combination of Heroku and Surge
